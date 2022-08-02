@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Vhec2022}
+    volumes:
+      - /data/posgresql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  web_admin:
+    container_name: web_admin
+    build:
+      context: ./web_admin
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  web_api:
+    container_name: web_api
+    build:
+      context: ./web_api
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    restart: unless-stopped
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    depends_on:
+      - web_admin
+    ports:
+      - "80:80"
+      - "81:81"
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/:rw
+    networks:
+      - app-network
+    restart: unless-stopped
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
