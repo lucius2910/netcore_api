@@ -1,14 +1,14 @@
 version: '3.3'
 
 services:
-  postgres:
+  pg_db:
     container_name: postgres
     image: postgres:14.1-alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Vhec2022}
-    volumes:
-      - /data/posgresql:/var/lib/postgresql/data
+    # volumes:
+    #   - /data/posgresql:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: unless-stopped
@@ -18,8 +18,12 @@ services:
   web_admin:
     container_name: web_admin
     build:
-      context: ./web_admin
+      context: ./src/web_admin
       dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:81/api
     networks:
       - app-network
     restart: unless-stopped
@@ -27,17 +31,17 @@ services:
   web_api:
     container_name: web_api
     build:
-      context: ./web_api
+      context: ./src/web_api
       dockerfile: Dockerfile
     networks:
       - app-network
     environment:
-      - ASPNETCORE_ENVIRONMENT=Staging
+      - ASPNETCORE_ENVIRONMENT=Development
     restart: unless-stopped
 
-  webserver:
+  web_server:
     image: nginx:alpine
-    container_name: webserver
+    container_name: web_server
     depends_on:
       - web_admin
     ports:

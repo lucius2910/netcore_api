@@ -1,0 +1,35 @@
+@import '../available';
+
+.navbar{
+  .logo {
+    width: 190px;
+    font-size: 24px;
+  }
+
+  .vc-account{
+    min-width: 200px;
+    .icon{
+      color: #fff;
+    }
+    .name{
+      color: #fff;
+      min-width: 200px;
+      text-align: left;
+    }
+  }
+
+
+  .btn-toggle-sidebar{
+    .el-icon{
+      transform: rotate(0deg);
+      transition: all ease-in-out .3s;
+      
+    }
+    &.actived{
+      .el-icon{
+        transform: rotate(180deg);
+        
+      }
+    }
+  }
+}

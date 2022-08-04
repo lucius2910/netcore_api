@@ -1,0 +1,20 @@
+@import '../available';
+.page-login{
+  padding: 0;
+  height: 100vh;
+  background-color: rgb(233, 233, 233);
+  .card-login {
+    width: 400px;
+    padding: 30px;
+    //transform: translatey(calc(calc(100vh - 520px) / 2));
+    .logo {
+      text-align: center;
+      font-weight: bold;
+      width: 100%;
+      // margin-bottom: 40px;
+      padding: 10px 0 60px 0;
+      font-size: 30px;
+      color: $-primary-color;
+    }
+  }
+}

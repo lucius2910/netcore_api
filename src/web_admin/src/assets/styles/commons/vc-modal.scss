@@ -1,0 +1,13 @@
+.v-dialog {
+	.v-overlay__content {
+		min-width: 500px;
+		max-width: 90vh;
+		max-height: 90vh;
+		.v-card-actions {
+			.v-btn {
+				color: #fff !important;
+			}
+		}
+	}
+}
+  

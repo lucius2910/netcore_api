@@ -1,0 +1,256 @@
+<template>
+  <div class="vc-page page-master">
+    <vc-row>
+      <vc-col :lg="3" :md="5" :sm="12">
+        <vc-input-group :label="tl('Resource', 'Module')">
+          <vc-select
+            v-model="searchModule"
+            :items="modulelist"
+            @selected="onSelectedModule"
+            fieldValue="key"
+            fieldText="value"
+          ></vc-select>
+        </vc-input-group>
+      </vc-col>
+      <vc-col :lg="3" :md="5" :sm="12">
+        <vc-input-group :label="tl('Resource', 'Screen')" class="ml-2">
+          <vc-select
+            v-model="searchScreen"
+            :items="screenList"
+            @selected="onSelectedScreen"
+          ></vc-select>
+        </vc-input-group>
+      </vc-col>
+      <vc-col :lg="6" :md="5" :sm="12" class="d-flex flex-end">
+        <vc-button class="ml-2" @click="onAddNew">
+          {{ tl("Common", "BtnAddNew") }}
+        </vc-button>
+      </vc-col>
+    </vc-row>
+    <vc-row>
+      <vc-col :span="12">
+        <vc-table
+          :datas="resourceList"
+          :tableConfig="tableConfig"
+          :colConfigs="colConfig"
+          :page="pageConfig"
+          :loading="isLoading"
+          @sorted="onSort"
+          @dbClick="onDbClick"
+          @pageChanged="onPageChanged"
+        >
+        </vc-table>
+      </vc-col>
+      <vc-col :span="12">
+        <vc-card class="pa-4">
+          <vc-card-content>
+            <v-form ref="resourceForm" lazy-validation>
+              <vc-row>
+                <vc-col>
+                  <vc-input-group
+                    required
+                    :label="tl('Resource', 'Key')"
+                    class="mb-2"
+                  >
+                    <vc-input
+                      v-model="detailItem.key"
+                      :rules="[ (v: any) => validate.required(v,  tl('Resource', 'Key'))]"
+                    >
+                    </vc-input>
+                  </vc-input-group>
+                  <vc-input-group required :label="tl('Resource', 'Value')">
+                    <vc-textarea
+                      v-model="detailItem.text"
+                      :rules="[ (v: any) => validate.required(v,  tl('Resource', 'Value'))]"
+                    />
+                  </vc-input-group>
+                </vc-col>
+              </vc-row>
+            </v-form>
+          </vc-card-content>
+          <vc-card-action class="d-flex pa-3">
+            <v-spacer></v-spacer>
+            <vc-button @click="onSave" :loading="isLoading" class="ml-2">
+              <v-icon light>mdi-content-save-outline</v-icon>
+              {{ tl("Common", "BtnSave") }}
+            </vc-button>
+            <vc-button
+              class="ml-2"
+              color="error"
+              @click="onDeleteConfirm"
+              :loading="isLoading"
+              v-if="detailItem.id"
+            >
+              <v-icon light>mdi-trash-can-outline</v-icon>
+              {{ tl("Common", "BtnDelete") }}
+            </vc-button>
+          </vc-card-action>
+          <vc-confirm ref="confirmDialog"></vc-confirm>
+        </vc-card>
+      </vc-col>
+    </vc-row>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import resourceService from "@/services/resource.service";
+import masterService from "@/services/master.service";
+import tl from "@/utils/locallize";
+import validate from "@/utils/validate";
+import { colConfig, tableConfig } from "@/commons/tables/resource.table";
+
+const defaultItem = {
+  lang: "ja",
+  module: null,
+  screen: null,
+  key: null,
+  text: null,
+};
+
+const pageNo = ref<any>(1);
+const goSort = ref<any>("");
+const detailItem = ref<any>(defaultItem);
+const searchModule = ref<any>("");
+const modulelist = ref<any>([]);
+const searchScreen = ref<any>("");
+const screenList = ref<any>([]);
+const pageConfig = ref<any>({});
+const resourceList = ref<any[]>([]);
+const isLoading = ref<boolean>(false);
+const resourceForm = ref<any>(null);
+const confirmDialog = ref<any>(null);
+
+onMounted(async () => {
+  await getListModule();
+});
+
+const onDbClick = (selected: any) => {
+  detailItem.value = { ...selected };
+};
+
+const onSort = async (sortBy: any) => {
+  goSort.value = sortBy;
+  getListResource();
+};
+
+const onSelectedModule = async () => {
+  await getListScreen();
+  await getListResource();
+  detailItem.value.module = searchModule.value;
+};
+
+const onSelectedScreen = async () => {
+  await getListResource();
+  detailItem.value.screen = searchScreen.value;
+};
+
+const getListModule = async () => {
+  await masterService
+    .getList({
+      search: "MODULE",
+      sort: goSort.value,
+      page: pageNo.value,
+      size: 10,
+    })
+    .then(async (data) => {
+      modulelist.value = data.data ?? [];
+      searchModule.value = modulelist.value[0].value;
+      await getListScreen();
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
+
+const getListScreen = async () => {
+  await resourceService
+    .getListScreen({
+      module: searchModule.value,
+      page: 1,
+      size: 100,
+    })
+    .then(async (data) => {
+      screenList.value =
+        data.data.map((x: any) => {
+          return { text: x, value: x };
+        }) ?? [];
+      searchScreen.value = data.data[0];
+      await getListResource();
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
+
+const getListResource = async () => {
+  isLoading.value = true;
+  await resourceService
+    .getList({
+      screen: searchScreen.value,
+      module: searchModule.value,
+      sort: goSort.value,
+      page: pageNo.value,
+      size: 20,
+    })
+    .then((data) => {
+      resourceList.value = data.data ?? [];
+      pageConfig.value = {
+        page: data.page,
+        size: data.size,
+        total: data.total,
+      };
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
+
+const onSave = async () => {
+  const { valid } = await resourceForm.value.validate();
+  if (!valid) return;
+
+  isLoading.value = true;
+
+  if (detailItem.value.id) {
+    await resourceService.update(detailItem.value).finally(() => {
+      isLoading.value = false;
+    });
+  } else {
+    await resourceService.create(detailItem.value).finally(() => {
+      isLoading.value = false;
+    });
+  }
+
+  await getListResource();
+  onAddNew();
+};
+
+const onDeleteConfirm = () => {
+  confirmDialog.value.confirm(
+    tl("Common", "Delete"),
+    tl("Common", "ConfirmDelete", [detailItem.value.key]),
+    async (res: any) => {
+      if (res) await onDelete();
+    }
+  );
+};
+
+const onPageChanged = async (picked: any) => {
+  pageNo.value = picked;
+  getListResource();
+};
+
+const onDelete = async () => {
+  isLoading.value = false;
+  await resourceService.delete(detailItem.value.id).finally(async () => {
+    isLoading.value = false;
+    await getListResource();
+    onAddNew();
+  });
+};
+
+const onAddNew = () => {
+  detailItem.value = defaultItem;
+};
+</script>

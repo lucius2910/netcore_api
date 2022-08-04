@@ -1,0 +1,10 @@
+ @import '../available';
+
+.side-bar{
+	width: 200px !important;
+	transition: all ease-in-out .35s;
+  &.isCollapse{
+		width: 65px !important;
+  }
+}
+

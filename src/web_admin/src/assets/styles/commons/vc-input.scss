@@ -1,0 +1,64 @@
+@import '../available';
+
+.vc-input{
+  .el-input__wrapper{
+    padding: 1px;
+    .el-input__inner{
+      padding: 1px 11px;
+    }
+  }
+}
+
+// .v-text-field {
+//   font-size: $-input-font-size;
+//   .v-field {
+//     height: 33px;
+//     border-radius: $-input-border;
+//     overflow: hidden;
+//     .v-field__field {
+//       background-color: #fff;
+//       min-height: fit-content;
+//       padding: 0;
+//       .v-field__input {
+//         border-radius: $-input-border;
+//         padding: 0;
+//         input {
+//           padding: 6px 10px;
+//           font-size: $-input-font-size;
+//         }
+//       }
+//     }
+//     .v-field__outline {
+//       border-radius: $-input-border;
+//       border: 1px solid $-input-border-color;
+//       &::before {
+//         width: 0;
+//       }
+//     }
+//     .v-field__append-inner {
+//       right: 0 !important;
+//       top: 0 !important;
+//       background-color: #e1e1e1;
+//       padding: 4px 4px !important;
+//       cursor: pointer;
+//     }
+//   }
+
+//   .v-input__details {
+//     margin-bottom: 0px;
+//     padding: 0px;
+//     padding-top: 4px;
+//     height: 15px;
+//     .v-messages__item {
+//       text-align: right;
+//     }
+//     .v-messages__message {
+//       text-align: right;
+//     }
+//   }
+//   &.v-input--error {
+//     .v-field__outline {
+//       border: 1px solid #d8082e;
+//     }
+//   }
+// }
