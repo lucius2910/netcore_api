@@ -1,23 +1,16 @@
-# develop stage
-FROM node:16-alpine3.15 as builder-stage
+FROM node:16-alpine
 
-WORKDIR /app/web_admin
+WORKDIR /usr/src/app/web_admin
 
 COPY package*.json ./
 
-RUN yarn
-
-COPY . .
-
-RUN yarn build --mode staging
+RUN yarn dev
 
 # production stage
-FROM nginx:1.15.7-alpine as production-stage
+FROM nginx:stable-alpine as production-stage
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=builder-stage /app/web_admin/dist /var/www/html
-
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]

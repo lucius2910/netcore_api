@@ -3,7 +3,7 @@
     <vc-row>
       <vc-col :span="10" class="d-flex">
         <vc-input v-model="searchKey" hide-details="true"></vc-input>
-        <vc-button class="ml-2" @click="getList" type="primary">
+        <vc-button class="ml-2" @click="getList" type="primary" :icon="Search">
           {{ tl("Common", "BtnSearch") }}
         </vc-button>
       </vc-col>
@@ -49,7 +49,7 @@ import userService from "@/services/user.service";
 import { colConfig, tableConfig } from "@/commons/tables/user.table";
 import { useToastStore } from "@/stores/toast.store";
 import tl from "@/utils/locallize";
-import { Delete, Plus } from '@element-plus/icons-vue';
+import { Search, Delete, Plus } from '@element-plus/icons-vue';
 
 const users = ref<any[]>([]);
 const pageConfig = ref<any>({});

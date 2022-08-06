@@ -6,7 +6,7 @@
           ref="userForm"
           :model="user"
           :rules="rules"
-          labvc-width="120px"
+          label-width="120px"
         >
           <vc-row :gutter="20">
             <vc-col :lg="12" :md="12" :sm="24" :xs="24">
@@ -123,12 +123,12 @@
 <script setup lang="ts">
 import { onBeforeMount, ref, reactive } from "vue";
 import validate from "@/utils/validate_elp";
+import tl from "@/utils/locallize";
 import { useRouter, useRoute } from "vue-router";
-import userService from "@/services/user.service";
 import type { FormInstance } from "element-plus";
+import userService from "@/services/user.service";
 import roleService from "@/services/role.service";
 import masterCodeService from "@/services/master.service";
-import tl from "@/utils/locallize";
 import { FolderChecked, Back, Delette } from '@element-plus/icons-vue';
 
 const rules = reactive({

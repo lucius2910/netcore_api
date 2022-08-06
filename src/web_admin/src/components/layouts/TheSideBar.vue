@@ -2,30 +2,32 @@
   <el-aside :class="['side-bar', { isCollapse: isCollapse }]">
     <el-scrollbar height="100vh">
       <el-menu :collapse="isCollapse">
-        <template v-for="(item, itemIndex) in menus" :key="itemIndex">
+        <template v-for="(item, itemIndex) in menu" :key="itemIndex">
           <el-menu-item
-            v-if="!item.items"
+            v-if="!item.items && item.url"
             :index="`${itemIndex}`"
             @click="goTo(item)"
           >
             <el-icon><Setting /></el-icon>
-            <template #title>{{ item.text }}</template>
+            <template #title>{{ item.name }}</template>
           </el-menu-item>
-          <template v-else>
+          <template v-if="item.items">
             <el-sub-menu :index="`${itemIndex}`">
               <template #title>
                 <el-icon><icon-menu /></el-icon>
-                <span> {{ item.text }}</span>
+                <span> {{ item.name }}</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item
+                <template 
                   v-for="(childItem, childIndex) in item.items"
-                  :key="childIndex"
-                  :index="`${itemIndex}-${childIndex}`"
-                  @click="goTo(childItem)"
-                >
-                  <template #title>{{ childItem.text }}</template>
-                </el-menu-item>
+                  :key="childIndex">
+                   <el-menu-item
+                      v-if="childItem.url"
+                      :index="`${itemIndex}-${childIndex}`"
+                      @click="goTo(childItem)">
+                      <template #title>{{ childItem.name }}</template>
+                    </el-menu-item>
+                  </template>
               </el-menu-item-group>
             </el-sub-menu>
           </template>
@@ -36,10 +38,9 @@
 </template>
 
 <script setup lang="ts">
-import { toRef } from "vue";
+import { toRef, ref, onMounted} from "vue";
 import router from "@/router";
-import type { Menu } from "@/interfaces/menu.interface";
-import menus from "@/commons/defines/menu";
+import serviceApi from "@/services/function.service";
 import { Setting, Menu as IconMenu } from "@element-plus/icons-vue";
 
 const props = defineProps<{
@@ -48,10 +49,17 @@ const props = defineProps<{
 }>();
 
 const isCollapse = toRef<any, string>(props, "isCollapse");
+const menu = ref();
+
+onMounted(async () => {
+  menu.value = await serviceApi.getTreeView().then(res => {
+    return res.data;
+  })
+})
 
 const goTo = (item: Menu) => {
   router.push({
-    name: item.routerName ?? "NotFound",
+    path: item.url ?? "/404",
   });
 };
 </script>

@@ -58,13 +58,13 @@ namespace Framework.Core.Entities
         private void FillCreateInfo(TEntity entity)
         {
             entity.created_date = DateTime.UtcNow;
-            entity.created_by = (Guid)_serviceContext._userId;
+            entity.created_by = Guid.NewGuid(); //(Guid)_serviceContext._userId;
         }
 
         private void FillUpdateInfo(TEntity entity)
         {
             entity.updated_date = DateTime.UtcNow;
-            entity.updated_by = _serviceContext._userId;
+            entity.updated_by = Guid.NewGuid(); //_serviceContext._userId;
         }
 
         public IDbContextTransaction BeginTransaction()
