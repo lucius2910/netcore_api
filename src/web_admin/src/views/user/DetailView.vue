@@ -2,7 +2,7 @@
   <div class="vc-page">
     <vc-card class="mb-4 mt-2 pa-4">
       <vc-card-content>
-        <vc-form
+        <el-form
           ref="userForm"
           :model="user"
           :rules="rules"
@@ -83,7 +83,7 @@
               </vc-input-group>
             </vc-col>
           </vc-row>
-        </vc-form>
+        </el-form>
       </vc-card-content>
 
       <vc-card-action class="d-flex pa-3">
@@ -133,19 +133,19 @@ import { FolderChecked, Back, Delette } from '@element-plus/icons-vue';
 
 const rules = reactive({
   user_name: [
-    { required: true, validator: validate.required, trigger: "change" },
+    { required: true, validator: validate.required, trigger: ["blur"] },
   ],
   full_name: [
-    { required: true, validator: validate.required, trigger: "change" },
+    { required: true, validator: validate.required, trigger: ["blur"] },
   ],
-  birthday: [{ validator: validate.dateRule, trigger: "change" }],
+  birthday: [{ validator: validate.dateRule, trigger: ["change"] }],
   email: [
-    { required: true, validator: validate.required, trigger: "change" },
-    { validator: validate.emailRule, trigger: "change" },
+    { required: true, validator: validate.required, trigger: ["blur"] },
+    { validator: validate.emailRule, trigger: ["change"] },
   ],
   phone: [
-    { required: true, validator: validate.required, trigger: "change" },
-    { validator: validate.phoneNumberRule, trigger: "change" },
+    { required: true, validator: validate.required, trigger: ["blur"] },
+    { validator: validate.phoneNumberRule, trigger: ["change"] },
   ],
 });
 

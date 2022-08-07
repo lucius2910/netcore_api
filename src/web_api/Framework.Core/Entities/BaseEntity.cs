@@ -1,11 +1,9 @@
 ﻿using Framework.Core.Abstractions;
-using System.ComponentModel.DataAnnotations;
 
 namespace Framework.Core.Entities
 {
     public abstract class BaseEntity : IAudit, ISoftDelete, IEntity<Guid>
     {
-        [Key]
         public Guid id { get; set; }
         public DateTime created_date { get; set; }
         public Guid created_by { get; set; }

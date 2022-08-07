@@ -11,11 +11,10 @@ const CONST = {
     // User
     USER: {
       LIST: "user",
-      CREATE: "user",
+      CREATE: "user/create",
       DETAIL: (id: string) => `user/${id}`,
-      UPDATE: (id: string) => `user/${id}`,
-      DELETE: (id: string | string[]) => `user/${id}`,
-      DELETE_MULTI: "user/delete-multi",
+      UPDATE: (id: string) => `user/update/${id}`,
+      DELETE: (id: string | string[]) => `user/delete/${id}`,
       RESET_PASSWORD: (id: string) => `user/${id}/reset_password`,
     },
 

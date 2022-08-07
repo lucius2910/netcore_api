@@ -43,16 +43,6 @@ const userService = {
         return response;
       });
   },
-
-  async deleteMulti(ids: string[]) {
-    const toastStore = useToastStore();
-    return await apiClient
-      .delete(CONST.API.USER.DELETE_MULTI, { data: ids })
-      .then((response: any) => {
-        toastStore.fromApiResponse(response);
-        return response;
-      });
-  },
 };
 
 export default userService;
