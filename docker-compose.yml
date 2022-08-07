@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-n0t_Publ1c}
     volumes:
-      - /usr/local/var/postgres:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: unless-stopped
@@ -55,3 +55,6 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  pg_data:
