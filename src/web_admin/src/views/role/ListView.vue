@@ -1,13 +1,12 @@
 <template>
   <div class="vc-page page-role">
     <vc-row>
-      <vc-col :span="10" class="d-flex">
-        <vc-input v-model="searchKey" hide-details="true"></vc-input>
-        <vc-button type="primary" class="ml-2" @click="getList" :icon="Search">
-          {{ tl("Common", "BtnSearch") }}
-        </vc-button>
+      <vc-col :lg="8" :md="12">
+        <vc-input-group>
+          <vc-input v-model="searchKey" :placeholder="tl('Role', 'SearchPlaceholder')"></vc-input>
+        </vc-input-group>
       </vc-col>
-      <vc-col :span="14" class="d-flex flex-end">
+      <vc-col :lg="16" :md="12" class="d-flex flex-end">
         <vc-button type="danger" @click="onDeleteSelected" code="F00015" :icon="Delete">
           {{ tl("Common", "BtnDeleteMulti") }}
         </vc-button>
@@ -18,7 +17,7 @@
     </vc-row>
 
     <vc-row class="mt-4">
-      <vc-col :span="24">
+      <vc-col :col="24">
         <vc-table
           :datas="roles"
           :tableConfig="tableConfig"

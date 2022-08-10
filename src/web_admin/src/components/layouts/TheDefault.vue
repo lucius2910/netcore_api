@@ -1,7 +1,7 @@
 <template>
   <el-container class="v-application">
     <TheSideBar :isCollapse="isCollapse" v-show="loggedIn" />
-    <el-container class="is-vertical">
+    <el-container class="page-container is-vertical">
       <TheNavBar @toogleSidebar="onCollapse" v-show="loggedIn" />
       <el-main>
         <RouterView />

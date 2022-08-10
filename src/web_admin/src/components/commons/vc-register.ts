@@ -12,7 +12,7 @@ import VcCheckbox from "./form/vc-checkbox.vue";
 import VcTextarea from "./form/vc-textarea.vue";
 import VcInputDate from "./form/vc-input-date.vue";
 import VcIcon from "./form/vc-icon.vue";
-import VcTree from "./form/vc-tree.vue";
+import VcTreeview from "./form/vc-treeview.vue";
 import VcConfirm from "./dialog/vc-confirm.vue";
 import VcModal from "./dialog/vc-modal.vue";
 import VcCard from "./card/vc-card.vue";
@@ -37,7 +37,7 @@ const requireComponent = {
   VcInputDate,
   VcCard,
   VcLabel,
-  VcTree,
+  VcTreeview,
   VcCardTitle,
   VcCardContent,
   VcCardAction,

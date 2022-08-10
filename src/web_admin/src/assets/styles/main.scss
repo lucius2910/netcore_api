@@ -22,11 +22,6 @@ html{
         height: 45px;
         border-bottom: 1px solid $-input-border-color;
     }
-
-    .el-aside {
-        color: var(--el-text-color-primary);
-        border-right: 1px solid $-input-border-color;
-    }
     .el-menu {
         border-right: none;
     }
@@ -35,6 +30,14 @@ html{
         .vc-page {
             padding: 20px;
         }
+    }
+
+    .page-container{
+        background-color: $-page-backgground;
+    }
+
+    .el-card{
+        box-shadow: none;
     }
 
 }
@@ -99,7 +102,7 @@ html{
 /************************** 1.Scrollbar *****************************/
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 7px;
     cursor: pointer;
 }
 
@@ -110,13 +113,13 @@ html{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #003866; 
+    background: $-scroll-backgground; 
     border-radius: $-input-border;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #032139; 
+    background: $-scroll-backgground; 
     cursor: pointer;
 }
 /********************************************************************/

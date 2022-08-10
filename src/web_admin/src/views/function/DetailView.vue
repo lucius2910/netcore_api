@@ -2,9 +2,13 @@
   <div class="vc-page">
     <vc-card class="mb-4 mt-2 pa-4">
       <vc-card-content>
-        <v-form ref="functionForm" lazy-validation>
-          <vc-row>
-            <vc-col :lg="5" :md="6" :sm="12" :xs="12">
+        <el-form  
+          ref="roleForm"
+          :model="role"
+          :rules="rules"
+          label-width="120px">
+          <vc-row :gutter="20">
+            <vc-col :lg="122" :md="12" :sm="24" :xs="24">
               <vc-input-group required :label="tl('Function', 'Module')">
                 <vc-select
                   v-model="func.module"
@@ -30,11 +34,11 @@
               </vc-input-group>
 
               <vc-input-group :label="tl('Function', 'Description')">
-                <vc-textarea v-model="func.description" />
+                <vc-textarea v-model="func.description" rows="4"/>
               </vc-input-group>
             </vc-col>
 
-            <vc-col :lg="5" :md="6" :sm="12" :xs="12">
+            <vc-col :lg="12" :md="12" :sm="24" :xs="24">
               <vc-input-group :label="tl('Function', 'Parent')">
                 <vc-select
                   v-model="func.parent"
@@ -65,35 +69,36 @@
                 <vc-input v-model="func.order" />
               </vc-input-group>
 
-              <vc-checkbox
-                :label="tl('Function', 'Active')"
-                v-model="func.is_active"
-              ></vc-checkbox>
+              <vc-input-group>
+                <vc-checkbox
+                  :label="tl('Function', 'Active')"
+                  v-model="func.is_active"
+                ></vc-checkbox>
+              </vc-input-group>
             </vc-col>
           </vc-row>
-        </v-form>
+        </el-form>
       </vc-card-content>
 
       <vc-card-action class="d-flex pa-3">
         <v-spacer></v-spacer>
-        <vc-button color="secondary" @click="goBack">
-          <v-icon light>mdi-arrow-left</v-icon>
+        <vc-button @click="goBack" :icon="ArrowLeft">
           {{ tl("Common", "BtnBack") }}
         </vc-button>
 
-        <vc-button @click="onSave" :loading="isLoading" class="ml-2">
-          <v-icon light>mdi-content-save-outline</v-icon>
+        <vc-button type="primary" @click="onSave" :loading="isLoading" class="ml-2">
           {{ tl("Common", "BtnSave") }}
         </vc-button>
 
         <vc-button
           color="error"
-          @click="onDeleteConfirm"
-          :loading="isLoading"
           class="ml-2"
+          type="danger"
+          :loading="isLoading"
+          :icon="Delete"
+          @click="onDeleteConfirm"
           v-if="func.id"
         >
-          <v-icon light>mdi-trash-can-outline</v-icon>
           {{ tl("Common", "BtnDelete") }}
         </vc-button>
       </vc-card-action>
@@ -110,6 +115,7 @@ import functionService from "@/services/function.service";
 import tl from "@/utils/locallize";
 import masterService from "@/services/master.service";
 import methodItem from "@/commons/defines/methodItem";
+import {ArrowLeft, Delete} from '@element-plus/icons-vue';
 
 const functionForm = ref<any>(null);
 const router = useRouter();

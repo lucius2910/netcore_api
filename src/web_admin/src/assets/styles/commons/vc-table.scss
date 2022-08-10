@@ -9,11 +9,9 @@
 //     table-layout: fixed;
      tr {
        th {
-         background-color: $-surface-color !important;
-//         font-size: $-input-font-size !important;
-//         //padding: 5px !important;
+         background-color: $-table-header-color !important;
          font-weight: 400;
-         color: #fff;
+         color: $-text-color;
 //         height: 40px !important;
 //         .vc-checkbox {
 //           .mdi-checkbox-blank-outline {
@@ -26,6 +24,9 @@
       }
     }
     .el-table__cell{
-      padding: 4px 0px;
+      padding: 4px 0px !important;
+    }
+    .table-footer{
+      background-color: #fff;
     }
   }

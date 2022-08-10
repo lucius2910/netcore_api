@@ -3,8 +3,40 @@
 .side-bar{
 	width: 200px !important;
 	transition: all ease-in-out .35s;
-  &.isCollapse{
+	background-color: $-surface-color;
+	border-right: 1px solid $-input-border-color;
+	&.isCollapse{
 		width: 65px !important;
-  }
+	}
+	.el-menu{
+		background-color: transparent;
+		.el-menu-item{
+			color: #fff;
+			&:hover{
+				background-color: #324057;
+			}
+		}
+		.el-sub-menu__title{
+			color: #fff;
+			&:hover{
+				background-color: #324057;
+			}
+		}
+		.el-menu-item-group{
+			.el-menu-item-group__title{
+				display: none;
+			}
+			ul{
+				color: #fff;
+				background-color: #172538;
+				.el-menu-item{
+					color: #fff;
+					&:hover{
+						background-color: #324057;
+					}
+				}
+			}
+		}
+	}
 }
 

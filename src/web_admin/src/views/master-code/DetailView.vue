@@ -1,58 +1,62 @@
 <template>
-  <vc-card class="mb-4 mt-2 pa-4">
-    <vc-card-content>
-      <v-form ref="masterForm" lazy-validation>
-        <vc-row>
-          <vc-col :lg="4" :md="6" :sm="12" :xs="12">
-            <vc-input-group required :label="tl('MasterCode', 'Type')">
-              <vc-input
-                v-model="master.type"
-                :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Type'))]"
-              />
-            </vc-input-group>
+  <div class="vc-page">
+    <vc-card class="mb-4 mt-2 pa-4">
+      <vc-card-content>
+        <el-form  
+            ref="roleForm"
+            :model="role"
+            :rules="rules"
+            label-width="120px">
+          <vc-row>
+            <vc-col :lg="12" :md="12" :sm="24" :xs="24">
+              <vc-input-group required :label="tl('MasterCode', 'Type')">
+                <vc-input
+                  v-model="master.type"
+                  :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Type'))]"
+                />
+              </vc-input-group>
 
-            <vc-input-group required :label="tl('MasterCode', 'Key')">
-              <vc-input
-                v-model="master.key"
-                :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Key'))]"
-              />
-            </vc-input-group>
+              <vc-input-group required :label="tl('MasterCode', 'Key')">
+                <vc-input
+                  v-model="master.key"
+                  :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Key'))]"
+                />
+              </vc-input-group>
 
-            <vc-input-group required :label="tl('MasterCode', 'Value')">
-              <vc-input
-                v-model="master.value"
-                :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Value'))]"
-              />
-            </vc-input-group>
-          </vc-col>
-        </vc-row>
-      </v-form>
-    </vc-card-content>
-    <vc-card-action class="d-flex pa-3">
-      <v-spacer></v-spacer>
-      <vc-button color="secondary" @click="goBack">
-        <v-icon light>mdi-arrow-left</v-icon>
-        {{ tl("Common", "BtnBack") }}
-      </vc-button>
+              <vc-input-group required :label="tl('MasterCode', 'Value')">
+                <vc-input
+                  v-model="master.value"
+                  :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Value'))]"
+                />
+              </vc-input-group>
+            </vc-col>
+          </vc-row>
+        </el-form >
+      </vc-card-content>
+      <vc-card-action class="d-flex pa-3">
+        <v-spacer></v-spacer>
+        <vc-button @click="goBack" :icon="ArrowLeft">
+          {{ tl("Common", "BtnBack") }}
+        </vc-button>
 
-      <vc-button @click="onSave" :loading="isLoading" class="ml-2">
-        <v-icon light>mdi-content-save-outline</v-icon>
-        {{ tl("Common", "BtnSave") }}
-      </vc-button>
+        <vc-button type="primary" @click="onSave" :loading="isLoading" class="ml-2">
+          {{ tl("Common", "BtnSave") }}
+        </vc-button>
 
-      <vc-button
-        class="ml-2"
-        color="error"
-        @click="onDeleteConfirm"
-        :loading="isLoading"
-        v-if="master.id"
-      >
-        <v-icon light>mdi-trash-can-outline</v-icon>
-        {{ tl("Common", "BtnDelete") }}
-      </vc-button>
-    </vc-card-action>
-    <vc-confirm ref="confirmDialog"></vc-confirm>
-  </vc-card>
+        <vc-button
+          class="ml-2"
+          color="error"
+          @click="onDeleteConfirm"
+          :loading="isLoading"
+          :icon="Delete"
+          v-if="master.id"
+        >
+          {{ tl("Common", "BtnDelete") }}
+        </vc-button>
+      </vc-card-action>
+      <vc-confirm ref="confirmDialog"></vc-confirm>
+    </vc-card>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -61,6 +65,7 @@ import validate from "@/utils/validate";
 import { useRouter, useRoute } from "vue-router";
 import masterService from "@/services/master.service";
 import tl from "@/utils/locallize";
+import {ArrowLeft, Delete} from '@element-plus/icons-vue';
 
 const masterForm = ref<any>(null);
 const router = useRouter();

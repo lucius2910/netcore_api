@@ -1,31 +1,21 @@
 <template>
   <div class="vc-page page-function">
     <vc-row>
-      <vc-col :lg="6" :md="12">
-        <vc-input-group :label="tl('Function', 'Module')">
-          <vc-input v-model="search.module"></vc-input>
-        </vc-input-group>
-      </vc-col>
-      <vc-col :lg="6" :md="12">
-        <vc-input-group :label="tl('Function', 'Parent')">
-          <vc-input v-model="search.parent"></vc-input>
-        </vc-input-group>
-      </vc-col>
       <vc-col :lg="8" :md="12">
-        <vc-input-group :label="tl('Function', 'Name')">
-          <vc-input v-model="search.name"></vc-input>
+        <vc-input-group>
+          <vc-input v-model="search.key" :placeholder="tl('Function', 'SearchPlaceholder')"></vc-input>
         </vc-input-group>
       </vc-col>
-      <vc-col :lg="12" :md="12">
-        <vc-button type="primary" class="ml-2" @click="onSearch">
+      <vc-col :lg="16" :md="12" class="d-flex flex-end">
+        <!-- <vc-button type="primary" class="ml-2" @click="onSearch" :icon="Search">
           {{ tl("Common", "BtnSearch") }}
-        </vc-button>
+        </vc-button> -->
 
-        <vc-button type="danger" class="ml-2" @click="onClear">
+        <vc-button type="danger" class="ml-2" @click="onClear" :icon="Delete">
           {{ tl("Common", "BtnClear") }}
         </vc-button>
 
-        <vc-button type="primary" sclass="ml-2 mt-2" @click="onAddNew">
+        <vc-button type="primary" sclass="ml-2 mt-2" @click="onAddNew" :icon="Plus">
           {{ tl("Common", "BtnAddNew") }}
         </vc-button>
       </vc-col>
@@ -78,7 +68,7 @@ import serviceApi from "@/services/function.service";
 import { colConfig, tableConfig } from "@/commons/tables/function.table";
 import tl from "@/utils/locallize";
 import { useToastStore } from "@/stores/toast.store";
-import { Edit, Delete } from '@element-plus/icons-vue';
+import { Edit, Delete, Search, Plus} from '@element-plus/icons-vue';
 
 const router = useRouter();
 const functions = ref<any[]>([]);

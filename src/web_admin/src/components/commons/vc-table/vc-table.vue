@@ -1,9 +1,8 @@
 <template>
   <!-- <vc-card class="pb-3"> -->
-  <div>
+  <div class="vc-table">
     <el-table
       border
-      class="vc-table"
       style="width: 100%"
       :height="height ?? '500px'"
       :data="datas"
@@ -26,7 +25,7 @@
       </el-table-column>
     </el-table>
     <!-- PAGING -->
-    <div class="table-footer mt-3" v-if="tableConfig?.showPaging">
+    <div class="table-footer pa-2 pt-3" v-if="tableConfig?.showPaging">
       <vc-pagination
         :pageConfig="pageConfig"
         @changed="onPageChanged"

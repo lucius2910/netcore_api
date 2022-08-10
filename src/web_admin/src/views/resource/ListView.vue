@@ -1,7 +1,7 @@
 <template>
   <div class="vc-page page-master">
     <vc-row>
-      <vc-col :lg="3" :md="5" :sm="12">
+      <vc-col :lg="6" :md="6" :sm="12">
         <vc-input-group :label="tl('Resource', 'Module')">
           <vc-select
             v-model="searchModule"
@@ -12,7 +12,7 @@
           ></vc-select>
         </vc-input-group>
       </vc-col>
-      <vc-col :lg="3" :md="5" :sm="12">
+      <vc-col :lg="6" :md="6" :sm="12">
         <vc-input-group :label="tl('Resource', 'Screen')" class="ml-2">
           <vc-select
             v-model="searchScreen"
@@ -21,13 +21,13 @@
           ></vc-select>
         </vc-input-group>
       </vc-col>
-      <vc-col :lg="6" :md="5" :sm="12" class="d-flex flex-end">
-        <vc-button class="ml-2" @click="onAddNew">
-          {{ tl("Common", "BtnAddNew") }}
+      <vc-col :lg="12" :md="12" :sm="12" class="d-flex flex-end">
+        <vc-button type="primary" class="ml-2" @click="onAddNew" :icon="Plus">
+          {{ tl("Common", "BtnAddNew") }} 
         </vc-button>
       </vc-col>
     </vc-row>
-    <vc-row>
+    <vc-row :gutter="20">
       <vc-col :span="12">
         <vc-table
           :datas="resourceList"
@@ -44,7 +44,11 @@
       <vc-col :span="12">
         <vc-card class="pa-4">
           <vc-card-content>
-            <v-form ref="resourceForm" lazy-validation>
+            <el-form 
+              ref="roleForm"
+              :model="role"
+              :rules="rules"
+              label-width="70px">
               <vc-row>
                 <vc-col>
                   <vc-input-group
@@ -60,18 +64,18 @@
                   </vc-input-group>
                   <vc-input-group required :label="tl('Resource', 'Value')">
                     <vc-textarea
+                      rows="17"
                       v-model="detailItem.text"
                       :rules="[ (v: any) => validate.required(v,  tl('Resource', 'Value'))]"
                     />
                   </vc-input-group>
                 </vc-col>
               </vc-row>
-            </v-form>
+            </el-form>
           </vc-card-content>
           <vc-card-action class="d-flex pa-3">
             <v-spacer></v-spacer>
-            <vc-button @click="onSave" :loading="isLoading" class="ml-2">
-              <v-icon light>mdi-content-save-outline</v-icon>
+            <vc-button @click="onSave" :loading="isLoading" class="ml-2" type="primary">
               {{ tl("Common", "BtnSave") }}
             </vc-button>
             <vc-button
@@ -79,9 +83,9 @@
               color="error"
               @click="onDeleteConfirm"
               :loading="isLoading"
+              :icon="Delete"
               v-if="detailItem.id"
             >
-              <v-icon light>mdi-trash-can-outline</v-icon>
               {{ tl("Common", "BtnDelete") }}
             </vc-button>
           </vc-card-action>
@@ -99,6 +103,7 @@ import masterService from "@/services/master.service";
 import tl from "@/utils/locallize";
 import validate from "@/utils/validate";
 import { colConfig, tableConfig } from "@/commons/tables/resource.table";
+import { Edit, Delete, Search, Plus} from '@element-plus/icons-vue';
 
 const defaultItem = {
   lang: "ja",
