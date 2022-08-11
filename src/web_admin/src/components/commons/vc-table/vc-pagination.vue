@@ -7,10 +7,10 @@
         v-model:currentPage="meta.page"
         v-model:page-size="meta.size"
         :page-sizes="[10, 15, 30, 50]"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalPage"
+        :total="totalItem"
         @size-change="onSizeChange"
         @current-change="onPageChange"
+        layout="total, sizes, prev, pager, next, jumper"
       >
       </el-pagination>
     </el-col>
@@ -32,6 +32,14 @@ const totalItem = ref(0);
 const totalPage = ref(0);
 
 watch(meta, (newVal) => {
+ calculate(newVal)
+});
+
+watch(props.pageConfig, (newVal) => {
+  calculate(newVal)
+});
+
+const calculate = (newVal: any) => {
   const page = newVal.page ?? 1;
   const size = newVal.size ?? 10;
   const total = newVal.total ?? 0;
@@ -39,16 +47,17 @@ watch(meta, (newVal) => {
   endPage.value = total < size * page ? total : size * page;
   totalPage.value = Math.ceil(total / (size ?? 1));
   totalItem.value = total;
-});
+}
 
-const emit = defineEmits(["pageChanged", "sizeChanged"]);
+const emit = defineEmits(["changed"]);
 
 const onPageChange = () => {
-  emit("pageChanged", meta.value.page);
+  emit("changed", meta.value);
 };
 
 const onSizeChange = () => {
-  emit("sizeChanged", meta.value.page);
+  meta.value.page = 1;
+  emit("changed", meta.value);
 };
 </script>
 

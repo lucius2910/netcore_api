@@ -64,22 +64,21 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import tl from "@/utils/locallize";
 import serviceApi from "@/services/function.service";
 import { colConfig, tableConfig } from "@/commons/tables/function.table";
-import tl from "@/utils/locallize";
 import { useToastStore } from "@/stores/toast.store";
 import { Edit, Delete, Search, Plus} from '@element-plus/icons-vue';
 
 const router = useRouter();
 const functions = ref<any[]>([]);
-const pageConfig = ref<any>({});
 const loading = ref<boolean>(false);
-const pageNo = ref<any>(1);
 const goSort = ref<any>("");
 const confirmDialog = ref<any>(null);
 const search = ref<any>({});
 const selectedItems = ref<any>([]);
 const searchKey = ref<any>("");
+const pageConfig = ref<any>({});
 const toastStore = useToastStore();
 
 onMounted(async () => {
@@ -91,25 +90,20 @@ const onSearch = async () => {
   await serviceApi
     .getList({
       ...search.value,
+      ...pageConfig.value,
       sort: goSort.value,
-      page: pageNo.value,
-      size: 15,
     })
     .then((data) => {
       functions.value = data.data ?? [];
-      pageConfig.value = {
-        size: data.size,
-        page: data.page,
-        total: data.total,
-      };
+      pageConfig.value.total = data.total
     })
     .finally(() => {
       loading.value = false;
     });
 };
 
-const onPageChanged = async (picked: any) => {
-  pageNo.value = picked;
+const onPageChanged = async (page: any) => {
+  pageConfig.value = {...page};
   onSearch();
 };
 

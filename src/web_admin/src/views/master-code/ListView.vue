@@ -2,7 +2,7 @@
   <div class="vc-page page-master">
     <vc-row>
       <vc-col :span="10" class="d-flex">
-        <vc-input v-model="searchKey"></vc-input>
+        <vc-input v-model="search"></vc-input>
         <vc-button type="primary" class="ml-2" @click="getList" :icon="Search">
           {{ tl("Common", "BtnSearch") }}
         </vc-button>
@@ -66,8 +66,7 @@ import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue';
 const masters = ref<any[]>([]);
 const pageConfig = ref<any>({});
 const router = useRouter();
-const searchKey = ref<any>("");
-const pageNo = ref<any>(1);
+const search = ref<any>("");
 const goSort = ref<any>("");
 const selectedItems = ref<any[]>([]);
 const loading = ref<boolean>(false);
@@ -82,18 +81,13 @@ const getList = async () => {
   loading.value = true;
   await masterService
     .getList({
-      search: searchKey.value,
+      ...search.value,
+      ...pageConfig.value,
       sort: goSort.value,
-      page: pageNo.value,
-      size: 10,
     })
     .then((data) => {
       masters.value = data.data ?? [];
-      pageConfig.value = {
-        page: data.page,
-        size: data.size,
-        total: data.total,
-      };
+      pageConfig.value.total = data.total
     })
     .finally(() => {
       loading.value = false;
@@ -126,9 +120,9 @@ const onSort = async (sortBy: any) => {
   getList();
 };
 
-const onPageChanged = async (picked: any) => {
-  pageNo.value = picked;
-  getList();
+const onPageChanged = async (page: any) => {
+  pageConfig.value = {...page};
+  onSearch();
 };
 
 const onEdit = (item: any) => {

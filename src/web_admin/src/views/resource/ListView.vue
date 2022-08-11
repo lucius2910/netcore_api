@@ -46,7 +46,7 @@
           <vc-card-content>
             <el-form 
               ref="roleForm"
-              :model="role"
+              :model="detailItem"
               :rules="rules"
               label-width="70px">
               <vc-row>
@@ -58,7 +58,6 @@
                   >
                     <vc-input
                       v-model="detailItem.key"
-                      :rules="[ (v: any) => validate.required(v,  tl('Resource', 'Key'))]"
                     >
                     </vc-input>
                   </vc-input-group>
@@ -66,7 +65,6 @@
                     <vc-textarea
                       rows="17"
                       v-model="detailItem.text"
-                      :rules="[ (v: any) => validate.required(v,  tl('Resource', 'Value'))]"
                     />
                   </vc-input-group>
                 </vc-col>
@@ -74,7 +72,6 @@
             </el-form>
           </vc-card-content>
           <vc-card-action class="d-flex pa-3">
-            <v-spacer></v-spacer>
             <vc-button @click="onSave" :loading="isLoading" class="ml-2" type="primary">
               {{ tl("Common", "BtnSave") }}
             </vc-button>
@@ -97,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import resourceService from "@/services/resource.service";
 import masterService from "@/services/master.service";
 import tl from "@/utils/locallize";
@@ -113,18 +110,24 @@ const defaultItem = {
   text: null,
 };
 
-const pageNo = ref<any>(1);
 const goSort = ref<any>("");
 const detailItem = ref<any>(defaultItem);
 const searchModule = ref<any>("");
 const modulelist = ref<any>([]);
 const searchScreen = ref<any>("");
 const screenList = ref<any>([]);
-const pageConfig = ref<any>({});
+const pageConfig = ref<any>({size: 30});
 const resourceList = ref<any[]>([]);
 const isLoading = ref<boolean>(false);
 const resourceForm = ref<any>(null);
 const confirmDialog = ref<any>(null);
+
+
+const rules = reactive({
+  key: [
+    { required: true, validator: validate.required, trigger: ["blur"] },
+  ]
+});
 
 onMounted(async () => {
   await getListModule();
@@ -154,9 +157,7 @@ const getListModule = async () => {
   await masterService
     .getList({
       search: "MODULE",
-      sort: goSort.value,
-      page: pageNo.value,
-      size: 10,
+      sort: goSort.value
     })
     .then(async (data) => {
       modulelist.value = data.data ?? [];
@@ -172,8 +173,6 @@ const getListScreen = async () => {
   await resourceService
     .getListScreen({
       module: searchModule.value,
-      page: 1,
-      size: 100,
     })
     .then(async (data) => {
       screenList.value =
@@ -195,16 +194,11 @@ const getListResource = async () => {
       screen: searchScreen.value,
       module: searchModule.value,
       sort: goSort.value,
-      page: pageNo.value,
-      size: 20,
+      ...pageConfig.value
     })
     .then((data) => {
       resourceList.value = data.data ?? [];
-      pageConfig.value = {
-        page: data.page,
-        size: data.size,
-        total: data.total,
-      };
+      pageConfig.value.total = data.total
     })
     .finally(() => {
       isLoading.value = false;
@@ -241,8 +235,8 @@ const onDeleteConfirm = () => {
   );
 };
 
-const onPageChanged = async (picked: any) => {
-  pageNo.value = picked;
+const onPageChanged = async (page: any) => {
+  pageConfig.value = {...page};
   getListResource();
 };
 

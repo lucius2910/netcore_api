@@ -3,7 +3,7 @@
     <vc-row>
       <vc-col :lg="8" :md="12">
         <vc-input-group>
-          <vc-input v-model="searchKey" :placeholder="tl('Role', 'SearchPlaceholder')"></vc-input>
+          <vc-input v-model="search" :placeholder="tl('Role', 'SearchPlaceholder')"></vc-input>
         </vc-input-group>
       </vc-col>
       <vc-col :lg="16" :md="12" class="d-flex flex-end">
@@ -70,8 +70,7 @@ import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue';
 const roles = ref<any[]>([]);
 const pageConfig = ref<any>({});
 const router = useRouter();
-const searchKey = ref<any>("");
-const pageNo = ref<any>(1);
+const search = ref<any>("");
 const goSort = ref<any>("");
 const selectedItems = ref<any[]>([]);
 const loading = ref<boolean>(false);
@@ -86,18 +85,13 @@ const getList = async () => {
   loading.value = true;
   await roleService
     .getList({
-      search: searchKey.value,
       sort: goSort.value,
-      page: pageNo.value,
-      size: 20,
+      ...search.value,
+      ...pageConfig.value,
     })
     .then((data) => {
       roles.value = data.data ?? [];
-      pageConfig.value = {
-        page: data.page,
-        size: data.size,
-        total: data.total,
-      };
+      pageConfig.value.total = data.total
     })
     .finally(() => {
       loading.value = false;
@@ -131,8 +125,8 @@ const onSort = async (sortBy: any) => {
   getList();
 };
 
-const onPageChanged = async (picked: any) => {
-  pageNo.value = picked;
+const onPageChanged = async (page: any) => {
+  pageConfig.value = {...page};
   getList();
 };
 
