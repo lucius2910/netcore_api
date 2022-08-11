@@ -2,7 +2,6 @@
   <!-- <vc-card class="pb-3"> -->
   <div class="vc-table">
     <el-table
-      border
       style="width: 100%"
       :height="height ?? '500px'"
       :data="datas"
@@ -14,16 +13,19 @@
         v-if="tableConfig.checkbox"
       />
       <el-table-column type="index" v-if="tableConfig.index" />
+
       <template v-for="(col, index) in colConfigs" :key="index">
         <el-table-column :prop="col.key" :label="col.title" />
       </template>
-      <!-- :label="tl('Common', 'Action')" -->
+
       <el-table-column width="70" v-if="tableConfig.action">
         <template #default="scope">
-          <slot name="action" :scope="scope"></slot>
+          <slot name="action" :data="scope.row" :scope="scope"></slot>
         </template>
       </el-table-column>
+
     </el-table>
+
     <!-- PAGING -->
     <div class="table-footer pa-2 pt-3" v-if="tableConfig?.showPaging">
       <vc-pagination
@@ -77,7 +79,6 @@ const {
 const emit = defineEmits([
   "dbClick",
   "onDelete",
-  "editClick",
   "sorted",
   "rowSelected",
   "pageChanged",
@@ -96,11 +97,6 @@ const onPageChanged = (page: any) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const dbClick = (item: any) => {
   if (tableConfig.value.dbClick) emit("dbClick", item);
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const editClick = (item: any) => {
-  emit("editClick", item);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -27,12 +27,12 @@
           @rowSelected="onRowSelected"
           @pageChanged="onPageChanged"
         >
-          <template #action>
+          <template #action="{data}">
             <vc-button
               size="small"
               type="danger"
               :icon="Delete"
-              @click="onDeleteItem()"
+              @click="onDeleteItem(data)"
             ></vc-button>
           </template>
         </vc-table>
@@ -115,7 +115,7 @@ const onDeleteItem = (item: any) => {
 };
 
 const onDeleteMulti = async (data: any) => {
-  await userService.deleteMulti(data.map((x: any) => x.id)).then(() => {
+  await userService.delete(data[0]).then(() => {
     getList();
   });
 };
