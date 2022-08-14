@@ -39,6 +39,7 @@
       </vc-col>
     </vc-row>
     <vc-confirm ref="confirmDialog"></vc-confirm>
+    <detail-modal ref="detailRef"></detail-modal>
   </div>
 </template>
 
@@ -50,6 +51,7 @@ import { colConfig, tableConfig } from "@/commons/tables/user.table";
 import { useToastStore } from "@/stores/toast.store";
 import tl from "@/utils/locallize";
 import { Search, Delete, Plus } from '@element-plus/icons-vue';
+import DetailModal from './DetailModal.vue'
 
 const users = ref<any[]>([]);
 const pageConfig = ref<any>({});
@@ -59,6 +61,7 @@ const goSort = ref<any>("");
 const selectedItems = ref<any[]>([]);
 const loading = ref<boolean>(false);
 const confirmDialog = ref<any>(null);
+const detailRef = ref<any>(null);
 const toastStore = useToastStore();
 
 onBeforeMount(async () => {
@@ -97,7 +100,9 @@ const onPageChanged = async (page: any) => {
 };
 
 const onAddNew = () => {
-  router.push({ name: "UserAddNew" });
+  //router.push({ name: "UserAddNew" });
+  detailRef.value.open()
+
 };
 
 const onEdit = (item: any) => {

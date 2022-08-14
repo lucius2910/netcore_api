@@ -1,35 +1,50 @@
 <template>
-  <v-dialog v-model="is_show">
-    <v-card class="pa-4">
-      <v-card-title>
-        <slot name="title"></slot>
-      </v-card-title>
-      <vc-card-content>
-        <slot name="content"></slot>
-      </vc-card-content>
-      <v-card-actions>
-        <slot name="action"></slot>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+  <el-dialog v-model="is_show" :show-close="false" :lock-scroll="true" :before-close="handleClose">
+    <template #header="{ close, titleId, titleClass }">
+      <div class="d-flex space-between align-centter">
+        <h4 :id="titleId" :class="titleClass">{{title}}</h4>
+        <div>
+          <slot name="acttion"></slot>
+        </div>
+      </div>
+    </template>
+    <slot name="content"></slot>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
+
 import { ref } from "vue";
+import { ElMessageBox } from 'element-plus'
+
+const props = defineProps<{
+  title?: string
+}>()
 
 const is_show = ref(false);
 
-const show = () => {
+const handleClose = (done: () => void) => {
+  done();
+  // ElMessageBox.confirm('Are you sure to close this dialog?')
+  //   .then(() => {
+  //     done()
+  //   })
+  //   .catch(() => {
+  //     // catch error
+  //   })
+}
+
+const open = () => {
   is_show.value = true;
 };
 
-const hide = () => {
+const close = () => {
   is_show.value = false;
 };
 
 defineExpose({
-  show,
-  hide,
+  open,
+  close,
 });
 </script>
 

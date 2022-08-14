@@ -1,12 +1,12 @@
 <template>
-  <div class="vc-page">
-    <vc-card class="mb-4 mt-2 pa-4">
-      <vc-card-content>
+  <vc-modal ref="modal" :title="tl('User', 'DetailTitle')" width="70%">
+      <template #content>
         <el-form
           ref="userForm"
           :model="user"
           :rules="rules"
-          label-width="120px"
+          label-width="150px"
+          label-position="left"
         >
           <vc-row :gutter="20">
             <vc-col :lg="12" :md="12" :sm="24" :xs="24">
@@ -71,7 +71,7 @@
               </vc-input-group>
             </vc-col>
 
-            <vc-col :lg="8" :md="12" :sm="24" :xs="24">
+            <vc-col :lg="12" :md="12" :sm="24" :xs="24">
               <vc-input-group :label="tl('User', 'Role')">
                 <vc-treeview
                   ref="treeRef"
@@ -84,9 +84,9 @@
             </vc-col>
           </vc-row>
         </el-form>
-      </vc-card-content>
+      </template>
 
-      <vc-card-action class="d-flex pa-3">
+      <template #acttion>
         <vc-button @click="goBack" :icon="Back">
           {{ tl("Common", "BtnBack") }}
         </vc-button>
@@ -113,11 +113,10 @@
         >
           {{ tl("Common", "BtnDelete") }}
         </vc-button>
-      </vc-card-action>
+      </template>
 
       <vc-confirm ref="confirmDialog"></vc-confirm>
-    </vc-card>
-  </div>
+  </vc-modal>
 </template>
 
 <script setup lang="ts">
@@ -156,6 +155,7 @@ const isLoading = ref(false);
 const roles = ref<any>([]);
 const genders = ref<any>([]);
 const confirmDialog = ref<any>(null);
+const modal = ref<any>(null);
 
 const user = reactive({
   id: null,
@@ -189,7 +189,8 @@ const init = async () => {
 };
 
 const goBack = () => {
-  router.push({ name: "UserList" });
+  //router.push({ name: "UserList" });
+  modal.value.close()
 };
 
 const onSave = async (formEl: FormInstance | undefined) => {
@@ -228,4 +229,18 @@ const onDelete = async () => {
     goBack();
   });
 };
+
+const open = () => {
+  modal.value.open();
+};
+
+const close = () => {
+  modal.value.close()
+};
+
+defineExpose({
+  open,
+  close,
+});
+
 </script>

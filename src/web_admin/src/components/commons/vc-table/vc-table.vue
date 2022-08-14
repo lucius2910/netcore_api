@@ -6,24 +6,29 @@
       :height="height ?? '500px'"
       :data="datas"
       v-loading="loading"
+      stripe
     >
+      <!-- CHECK BOX -->
       <el-table-column
         type="selection"
         width="50"
         v-if="tableConfig.checkbox"
       />
+
+      <!-- INDEX -->
       <el-table-column type="index" v-if="tableConfig.index" />
 
-      <template v-for="(col, index) in colConfigs" :key="index">
-        <el-table-column :prop="col.key" :label="col.title" />
+      <!-- DATA -->
+      <template v-for="(col, index) in colConfigs" :key="index" >
+        <el-table-column :prop="col.key" :label="col.title"/>
       </template>
 
+      <!-- ACTIONS -->
       <el-table-column width="70" v-if="tableConfig.action">
         <template #default="scope">
           <slot name="action" :data="scope.row" :scope="scope"></slot>
         </template>
       </el-table-column>
-
     </el-table>
 
     <!-- PAGING -->
@@ -34,17 +39,6 @@
       ></vc-pagination>
     </div>
     <!-- PAGING -->
-
-    <!-- LOADING -->
-    <!-- <v-overlay
-      contained
-      :model-value="loading"
-      class="align-center justify-center"
-    >
-      <v-progress-circular indeterminate size="30"></v-progress-circular>
-    </v-overlay> -->
-    <!-- LOADING -->
-    <!-- </vc-card> -->
   </div>
 </template>
 
@@ -129,7 +123,6 @@ const onRowSelected = (item: any) => {
  * Event click sort table header
  * Emit sorted
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const onSort = (index: number) => {
   colSettings.value = colSettings.value.map((el, i) => {
     if (i == index) {
@@ -150,34 +143,6 @@ const onSort = (index: number) => {
   emit("sorted", sortBy.value);
 };
 
-/**
- * Return selected
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const isSelected = (item: any) => {
-  return rowSelected.value.includes(item);
-};
-
-/**
- * Calculate colSpan by config
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const colSpan = () => {
-  return (
-    colSettings.value.length +
-    (tableConfig.value.action ? 1 : 0) +
-    (tableConfig.value.checkbox ? 1 : 0) +
-    (tableConfig.value.index ? 1 : 0)
-  );
-};
-
-/**
- * Calculate row index width paging
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const rowPagedIndex = (index: number) => {
-  return (pageConfig.value.page - 1) * pageConfig.value.size + index + 1;
-};
 </script>
 <style lang="scss">
 @import "@/assets/styles/commons/vc-table";

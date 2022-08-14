@@ -1,4 +1,5 @@
 @import "./available";
+@import "./main-elp";
 
 * {
     padding: 0;
@@ -16,32 +17,6 @@ html{
 
 /************************** 0.Main *********************************/
 
-.v-application{
-    .el-header {
-        padding: 0;
-        height: 45px;
-        border-bottom: 1px solid $-input-border-color;
-    }
-    .el-menu {
-        border-right: none;
-    }
-    .el-main{
-        padding: 0;
-        .vc-page {
-            padding: 20px;
-        }
-    }
-
-    .page-container{
-        background-color: $-page-backgground;
-    }
-
-    .el-card{
-        box-shadow: none;
-    }
-
-}
-
 .d-flex{
     display: flex;
 }
@@ -49,6 +24,11 @@ html{
 .flex-center{
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.align-centter{
+    display: flex;
     align-items: center;
 }
 

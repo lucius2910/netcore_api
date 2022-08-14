@@ -1,13 +1,10 @@
-.v-dialog {
-	.v-overlay__content {
-		min-width: 500px;
-		max-width: 90vh;
-		max-height: 90vh;
-		.v-card-actions {
-			.v-btn {
-				color: #fff !important;
-			}
-		}
+@import "../available";
+
+.el-dialog{
+	.el-dialog__header{
+		margin: 0;
+		padding: 12px 16px;
+		border-bottom: 1px solid $-input-border-color;
 	}
 }
   

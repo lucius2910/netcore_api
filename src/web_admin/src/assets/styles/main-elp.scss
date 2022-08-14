@@ -1,0 +1,30 @@
+.v-application{
+    .el-header {
+        padding: 0;
+        height: 45px;
+        border-bottom: 1px solid $-input-border-color;
+    }
+    .el-menu {
+        border-right: none;
+    }
+    .el-main{
+        padding: 0;
+        .vc-page {
+            padding: 20px;
+        }
+    }
+
+    .page-container{
+        background-color: $-page-backgground;
+    }
+
+    .el-card{
+        box-shadow: none;
+        border-color: #fff;
+    }
+
+    .el-form-item__error{
+        text-align: right;
+        width: 100%;
+    }
+}
