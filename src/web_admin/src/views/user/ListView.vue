@@ -48,7 +48,6 @@ import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import userService from "@/services/user.service";
 import { colConfig, tableConfig } from "@/commons/tables/user.table";
-import { useToastStore } from "@/stores/toast.store";
 import tl from "@/utils/locallize";
 import { Search, Delete, Plus } from '@element-plus/icons-vue';
 import DetailModal from './DetailModal.vue'
@@ -62,7 +61,6 @@ const selectedItems = ref<any[]>([]);
 const loading = ref<boolean>(false);
 const confirmDialog = ref<any>(null);
 const detailRef = ref<any>(null);
-const toastStore = useToastStore();
 
 onBeforeMount(async () => {
   getList();

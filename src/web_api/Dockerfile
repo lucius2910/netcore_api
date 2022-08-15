@@ -8,11 +8,11 @@ WORKDIR /source
 
 # copy and publish app and libraries
 COPY . .
-RUN dotnet publish "./Seisankanri.Api/Seisankanri.Api.csproj" -c release -o /app
+RUN dotnet publish "./Presentation/WebAPI/WebAPI.csproj" -c release -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app .
 EXPOSE 80
-ENTRYPOINT ["dotnet", "Seisankanri.Api.dll"]
+ENTRYPOINT ["dotnet", "WebAPI.dll"]

@@ -47,7 +47,6 @@ import { ref, toRefs, onMounted } from "vue";
 import type { MetaResponse } from "@/interfaces/response.interface";
 import type { ColConfig, TableConfig } from "@/interfaces/table.interface";
 import VcPagination from "./vc-pagination.vue";
-import tl from "@/utils/locallize";
 
 const props = defineProps<{
   datas: any[];
@@ -123,6 +122,7 @@ const onRowSelected = (item: any) => {
  * Event click sort table header
  * Emit sorted
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const onSort = (index: number) => {
   colSettings.value = colSettings.value.map((el, i) => {
     if (i == index) {

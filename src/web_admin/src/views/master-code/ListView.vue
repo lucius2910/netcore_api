@@ -74,10 +74,10 @@ const confirmDialog = ref<any>(null);
 const toastStore = useToastStore();
 
 onMounted(async () => {
-  getList();
+  onSearch();
 });
 
-const getList = async () => {
+const onSearch = async () => {
   loading.value = true;
   await masterService
     .getList({
@@ -117,7 +117,7 @@ const onRowSelected = (selected: any) => {
 
 const onSort = async (sortBy: any) => {
   goSort.value = sortBy;
-  getList();
+  onSearch();
 };
 
 const onPageChanged = async (page: any) => {
@@ -145,7 +145,7 @@ const onDeleteItem = (item: any) => {
 
 const onDeleteMulti = async (data: any) => {
   await masterService.deleteMulti(data.map((x: any) => x.id)).then(() => {
-    getList();
+    onSearch();
   });
 };
 </script>

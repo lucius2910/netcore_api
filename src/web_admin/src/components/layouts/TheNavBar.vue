@@ -9,17 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRef } from "vue";
+import { ref } from "vue";
 import { ArrowLeftBold } from "@element-plus/icons-vue";
 
-const props = defineProps<{
+defineProps<{
   show?: boolean;
 }>();
 
 const emit = defineEmits(["toogleSidebar"]);
 
 const showNav = ref(false);
-const show = toRef(props, "show");
 
 const toogleSidebar = () => {
   showNav.value = !showNav.value;

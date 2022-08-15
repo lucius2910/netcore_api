@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="is_show" :show-close="false" :lock-scroll="true" :before-close="handleClose">
-    <template #header="{ close, titleId, titleClass }">
+    <template #header="{titleId, titleClass }">
       <div class="d-flex space-between align-centter">
         <h4 :id="titleId" :class="titleClass">{{title}}</h4>
         <div>
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 
-import { ref } from "vue";
+import { ref, toRef } from "vue";
 import { ElMessageBox } from 'element-plus'
 
 const props = defineProps<{
@@ -22,6 +22,7 @@ const props = defineProps<{
 }>()
 
 const is_show = ref(false);
+const title = toRef(props, "titles");
 
 const handleClose = (done: () => void) => {
   done();

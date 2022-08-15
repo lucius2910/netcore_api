@@ -7,9 +7,6 @@
         </vc-input-group>
       </vc-col>
       <vc-col :lg="16" :md="12" class="d-flex flex-end">
-        <!-- <vc-button type="primary" class="ml-2" @click="onSearch" :icon="Search">
-          {{ tl("Common", "BtnSearch") }}
-        </vc-button> -->
 
         <vc-button type="danger" class="ml-2" @click="onClear" :icon="Delete">
           {{ tl("Common", "BtnClear") }}
@@ -67,8 +64,7 @@ import { useRouter } from "vue-router";
 import tl from "@/utils/locallize";
 import serviceApi from "@/services/function.service";
 import { colConfig, tableConfig } from "@/commons/tables/function.table";
-import { useToastStore } from "@/stores/toast.store";
-import { Edit, Delete, Search, Plus} from '@element-plus/icons-vue';
+import { Edit, Delete, Plus} from '@element-plus/icons-vue';
 
 const router = useRouter();
 const functions = ref<any[]>([]);
@@ -76,10 +72,7 @@ const loading = ref<boolean>(false);
 const goSort = ref<any>("");
 const confirmDialog = ref<any>(null);
 const search = ref<any>({});
-const selectedItems = ref<any>([]);
-const searchKey = ref<any>("");
 const pageConfig = ref<any>({});
-const toastStore = useToastStore();
 
 onMounted(async () => {
   onSearch();
@@ -119,14 +112,6 @@ const onClear = () => {
     name: null,
   };
   onSearch();
-};
-
-const onChangeItem = async (data: any) => {
-  loading.value = true;
-  data.is_active = !data.is_active;
-  await serviceApi.update(data).finally(() => {
-    loading.value = false;
-  });
 };
 
 const onAddNew = () => {

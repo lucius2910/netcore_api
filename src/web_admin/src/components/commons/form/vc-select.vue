@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 import { ref, toRef, watch, useAttrs } from "vue";
-import tl from "@/utils/locallize";
 
 const props = defineProps<{
   items: any[];

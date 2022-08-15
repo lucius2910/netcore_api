@@ -33,16 +33,16 @@ watch(modelValue, (newVal) => {
 
 const treeRef = ref<InstanceType<typeof ElTree>>();
 
-const getCheckedNodes = () => {
-  return treeRef.value!.getCheckedNodes(false, false);
-};
+// const getCheckedNodes = () => {
+//   return treeRef.value?.getCheckedNodes(false, false);
+// };
 
 const getCheckedKeys = () => {
-  return treeRef.value!.getCheckedKeys(false);
+  return treeRef.value?.getCheckedKeys(false);
 };
 
 const setCheckedKeys = (keys: any) => {
-  treeRef.value!.setCheckedKeys(keys, false);
+  treeRef.value?.setCheckedKeys(keys, false);
 };
 
 const onSelected = () => {

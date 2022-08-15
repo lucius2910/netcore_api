@@ -100,7 +100,7 @@ import masterService from "@/services/master.service";
 import tl from "@/utils/locallize";
 import validate from "@/utils/validate";
 import { colConfig, tableConfig } from "@/commons/tables/resource.table";
-import { Edit, Delete, Search, Plus} from '@element-plus/icons-vue';
+import { Delete, Plus} from '@element-plus/icons-vue';
 
 const defaultItem = {
   lang: "ja",

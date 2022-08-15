@@ -123,12 +123,12 @@
 import { onBeforeMount, ref, reactive } from "vue";
 import validate from "@/utils/validate_elp";
 import tl from "@/utils/locallize";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
 import type { FormInstance } from "element-plus";
 import userService from "@/services/user.service";
 import roleService from "@/services/role.service";
 import masterCodeService from "@/services/master.service";
-import { FolderChecked, Back, Delette } from '@element-plus/icons-vue';
+import { FolderChecked, Back } from '@element-plus/icons-vue';
 
 const rules = reactive({
   user_name: [
@@ -149,7 +149,6 @@ const rules = reactive({
 });
 
 const userForm = ref<FormInstance>();
-const router = useRouter();
 const route = useRoute();
 const isLoading = ref(false);
 const roles = ref<any>([]);

@@ -57,7 +57,7 @@ onMounted(async () => {
   })
 })
 
-const goTo = (item: Menu) => {
+const goTo = (item: any) => {
   router.push({
     path: item.url ?? "/404",
   });

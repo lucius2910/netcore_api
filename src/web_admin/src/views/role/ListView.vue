@@ -65,7 +65,7 @@ import roleService from "@/services/role.service";
 import { colConfig, tableConfig } from "@/commons/tables/role.table";
 import tl from "@/utils/locallize";
 import { useToastStore } from "@/stores/toast.store";
-import { Delete, Edit, Search, Plus } from '@element-plus/icons-vue';
+import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 
 const roles = ref<any[]>([]);
 const pageConfig = ref<any>({});
