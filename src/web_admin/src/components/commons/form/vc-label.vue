@@ -1,5 +1,5 @@
 <template>
-  <div :class="['vc-label py-1', type, { required: required }]">
+  <div :class="['vc-label py-1', { required: required }]">
     <label>
       <slot></slot>
     </label>

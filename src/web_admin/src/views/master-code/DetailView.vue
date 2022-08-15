@@ -4,7 +4,7 @@
       <vc-card-content>
         <el-form  
             ref="roleForm"
-            :model="role"
+            :model="master"
             :rules="rules"
             label-width="120px">
           <vc-row>
@@ -25,7 +25,7 @@
 
               <vc-input-group required :label="tl('MasterCode', 'Value')">
                 <vc-input
-                  v-model="master.value"
+                  v-model="master"
                   :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Value'))]"
                 />
               </vc-input-group>
@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import validate from "@/utils/validate";
 import { useRouter, useRoute } from "vue-router";
 import masterService from "@/services/master.service";
@@ -71,7 +71,14 @@ const masterForm = ref<any>(null);
 const router = useRouter();
 const route = useRoute();
 const isLoading = ref(false);
-const master = ref<any>({});
+const rules = ref({});
+
+const master = reactive({
+  id: null,
+  type: null,
+  key: null,
+  value: false
+});
 
 const confirmDialog = ref<any>(null);
 const _id = route.params.id as string;
@@ -85,7 +92,7 @@ onMounted(() => {
 
 const getMasterCodeDetail = async () => {
   const response = await masterService.detail(_id);
-  master.value = response?.data;
+  Object.assign(master, response?.data);
 };
 
 const goBack = () => {
@@ -98,17 +105,17 @@ const onSave = async () => {
   isLoading.value = true;
 
   if (_id) {
-    await masterService.update(master.value).finally(() => {
+    await masterService.update(master).finally(() => {
       isLoading.value = false;
     });
   } else {
-    await masterService.create(master.value).finally(() => {
+    await masterService.create(master).finally(() => {
       isLoading.value = false;
-      master.value = {
+      Object.assign(master, {
         type: null,
         key: null,
         value: null,
-      };
+      });
     });
   }
 };
@@ -117,7 +124,7 @@ const onDeleteConfirm = () => {
   confirmDialog.value.confirm(
     tl("Common", "Delete"),
     tl("Common", "ConfirmDelete", [
-      `${master.value.type}-${master.value.value}`,
+      `${master.type}-${master.value}`,
     ]),
     async (res: any) => {
       if (res) {

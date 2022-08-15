@@ -15,14 +15,14 @@
 <script setup lang="ts">
 
 import { ref, toRef } from "vue";
-import { ElMessageBox } from 'element-plus'
+// import { ElMessageBox } from 'element-plus'
 
 const props = defineProps<{
   title?: string
 }>()
 
 const is_show = ref(false);
-const title = toRef(props, "titles");
+const title = toRef(props, "title");
 
 const handleClose = (done: () => void) => {
   done();

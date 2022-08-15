@@ -4,7 +4,7 @@
       <vc-card-content>
         <el-form  
           ref="roleForm"
-          :model="role"
+          :model="func"
           :rules="rules"
           label-width="120px">
           <vc-row :gutter="20">
@@ -58,7 +58,7 @@
 
               <vc-input-group :label="tl('Function', 'Method')">
                 <vc-select
-                  v-model="func.methodItem"
+                  v-model="func.method"
                   :items="methodItem"
                   fieldValue="key"
                   fieldText="value"
@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import validate from "@/utils/validate";
 import { useRouter, useRoute } from "vue-router";
 import functionService from "@/services/function.service";
@@ -123,11 +123,26 @@ const route = useRoute();
 const isLoading = ref(false);
 const modules = ref<any>([]);
 const parents = ref<any>([]);
-const func = ref<any>({});
 
 const confirmDialog = ref<any>(null);
+const rules = ref<any>({});
 
 const _id = route.params.id as string;
+
+
+const func = reactive({
+  id: null,
+  module: null,
+  code: null,
+  text: false,
+  description: null,
+  parent: null,
+  url: null,
+  path: null,
+  method: null,
+  is_active: false,
+  order: null,
+});
 
 onMounted(async () => {
   await getListModule();
@@ -172,7 +187,7 @@ const getListParent = async () => {
 
 const getFunctionDetail = async () => {
   const response = await functionService.detail(_id);
-  func.value = response?.data;
+  Object.assign(func, response?.data);
 };
 
 const goBack = () => {
@@ -184,15 +199,15 @@ const onSave = async () => {
   if (!valid) return;
   isLoading.value = true;
 
-  console.log(func.value);
+  console.log(func);
   if (_id) {
-    await functionService.update(func.value).finally(() => {
+    await functionService.update(func).finally(() => {
       isLoading.value = false;
     });
   } else {
-    await functionService.create(func.value).finally(() => {
+    await functionService.create(func).finally(() => {
       isLoading.value = false;
-      console.log(func.value);
+      console.log(func);
     });
   }
 };
@@ -200,7 +215,7 @@ const onSave = async () => {
 const onDeleteConfirm = () => {
   confirmDialog.value.confirm(
     tl("Common", "Delete"),
-    tl("Common", "ConfirmDelete", [func.value.code]),
+    tl("Common", "ConfirmDelete", [func.code]),
 
     async (res: any) => {
       if (res) await onDelete();

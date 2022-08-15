@@ -129,7 +129,7 @@ import type { FormInstance } from "element-plus";
 import userService from "@/services/user.service";
 import roleService from "@/services/role.service";
 import masterCodeService from "@/services/master.service";
-import { FolderChecked, Back } from '@element-plus/icons-vue';
+import { FolderChecked, Back, Delete } from '@element-plus/icons-vue';
 
 const rules = reactive({
   user_name: [

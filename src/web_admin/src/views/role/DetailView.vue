@@ -81,8 +81,10 @@ const isLoading = ref(false);
 const functions = ref<any>([]);
 
 const confirmDialog = ref<any>(null);
-const rules = reactive();
+const rules = reactive({});
+
 const role = reactive({
+  id: null,
   code: null,
   text: null,
   description: null,
@@ -99,7 +101,7 @@ onMounted(async () => {
 
 const getRoleDetail = async () => {
   const response = await roleService.detail(_id);
-  role.value = response?.data;
+  Object.assign(role, response?.data);
 };
 
 const getFunction = async () => {
@@ -113,19 +115,19 @@ const goBack = () => {
 };
 
 const onSave = async () => {
-  role.value.permissions = role.value.permissions ?? [];
+  role.permissions = role.permissions ?? [];
   const { valid } = await roleForm.value.validate();
   if (!valid) return;
   isLoading.value = true;
 
   if (_id) {
-    await roleService.update(role.value).finally(() => {
+    await roleService.update(role).finally(() => {
       isLoading.value = false;
     });
   } else {
-    await roleService.create(role.value).finally(() => {
+    await roleService.create(role).finally(() => {
       isLoading.value = false;
-      console.log(role.value);
+      console.log(role);
     });
   }
 };
@@ -133,7 +135,7 @@ const onSave = async () => {
 const onDeleteConfirm = () => {
   confirmDialog.value.confirm(
     tl("Common", "Delete"),
-    tl("Common", "ConfirmDelete", [role.value.code]),
+    tl("Common", "ConfirmDelete", [role.code]),
     async (res: any) => {
       if (res) await onDelete();
     }

@@ -4,8 +4,8 @@ export type AuthResponse = {
 };
 
 export type AuthRequestLogin = {
-  user_name: string;
-  password: string;
+  user_name: string | null;
+  password: string | null;
   remember: boolean;
 };
 

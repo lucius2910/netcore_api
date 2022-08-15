@@ -3,7 +3,7 @@
     <vc-row>
       <vc-col :span="10" class="d-flex">
         <vc-input v-model="search"></vc-input>
-        <vc-button type="primary" class="ml-2" @click="getList" :icon="Search">
+        <vc-button type="primary" class="ml-2" @click="onSearch" :icon="Search">
           {{ tl("Common", "BtnSearch") }}
         </vc-button>
       </vc-col>
