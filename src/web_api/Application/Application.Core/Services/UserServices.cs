@@ -14,29 +14,22 @@ namespace Application.Core.Services
     public class UserServices : BaseService, IUserServices
     {
         private readonly IRepository<User> userRepository;
-        private readonly IRepository<Branch> branchRepo;
         private readonly IRepository<Permission> permissionRepository;
 
         public UserServices(IUnitOfWork _unitOfWork, IMapper _mapper): base(_unitOfWork, _mapper)
         {
             userRepository = _unitOfWork.GetRepository<User>();
-            branchRepo = _unitOfWork.GetRepository<Branch>();
             permissionRepository = _unitOfWork.GetRepository<Permission>();
         }
 
         public async Task<IPagedList<UserResponse>> GetPaged(UserSearchRequest request)
         {
-            var companyCD = branchRepo.GetQuery().ExcludeSoftDeleted().Where(x => x.code == request.branch_cd && x.branch_f == 1).Select(x=> x.code).FirstOrDefault();
             var data = userRepository
                         .GetQuery()
                         .ExcludeSoftDeleted()
-                        .Where(x => string.IsNullOrEmpty(request.role_cd) && string.IsNullOrEmpty(request.code) && string.IsNullOrEmpty(request.branch_cd) && string.IsNullOrEmpty(request.deparment_cd) && string.IsNullOrEmpty(request.jobtitle_cd) && string.IsNullOrEmpty(request.full_name) && !request.is_actived)
                         .Where(x => string.IsNullOrEmpty(request.role_cd) || x.role_cd.ToLower().Equals(request.role_cd.ToLower()))
                         .Where(x => string.IsNullOrEmpty(request.code) || x.code.ToLower().Contains(request.code.ToLower()))
                         .Where(x => x.is_actived.Equals(request.is_actived))
-                        .Where(x => string.IsNullOrEmpty(request.branch_cd) || x.branch_cd.ToLower().Equals(request.branch_cd.ToLower()))
-                        .Where(x => string.IsNullOrEmpty(request.deparment_cd) || x.deparment_cd.ToLower().Equals(request.deparment_cd.ToLower()))
-                        .Where(x => string.IsNullOrEmpty(request.jobtitle_cd) || x.jobtitle_cd.ToLower().Equals(request.jobtitle_cd.ToLower()))
                         .Where(x => string.IsNullOrEmpty(request.full_name) || x.full_name.ToLower().Contains(request.full_name.ToLower()))
                         .SortBy(request.sort)
                         .ToPagedList(request.page, request.size);

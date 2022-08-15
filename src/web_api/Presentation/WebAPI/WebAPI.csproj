@@ -30,9 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\Application.Common\Application.Common.csproj" />
     <ProjectReference Include="..\..\Application\Application.Core\Application.Core.csproj" />
-    <ProjectReference Include="..\..\Application\Application.Inventories\Application.Inventories.csproj" />
-    <ProjectReference Include="..\..\Application\Application.Sale\Application.Sale.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Core\Framework.Core.csproj" />
   </ItemGroup>
 
 </Project>

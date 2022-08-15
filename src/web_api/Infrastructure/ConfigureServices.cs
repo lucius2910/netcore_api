@@ -1,4 +1,5 @@
-﻿using Infrastructure.Extensions;
+﻿using Framework.Core.Helpers.Cache;
+using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,9 +28,31 @@ namespace Infrastructure
             return services;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            // CORS
+            services.AddCors(builder =>
+            {
+                builder.AddPolicy(
+                    name: "_myAllowOrigins",
+                    policy =>
+                    {
+                        policy.AllowAnyHeader();
+                        policy.AllowAnyMethod();
+                        policy.AllowAnyOrigin();
+                    }
+                    );
+            });
 
+            // CACHE
+            services.AddMemoryCache();
+            services.AddScoped<ICachingService, DefaultCachingService>();
             return services;
         }
 

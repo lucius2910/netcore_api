@@ -2,10 +2,9 @@ using Application.Core.Extensions;
 using Microsoft.OpenApi.Models;
 using WebAPI.Extensions;
 using System.Reflection;
-using Application.Core.Services;
 using Application.Common.Extensions;
-using Application.Inventories.Extensions;
-using Application.Sale.Extensions;
+using Infrastructure;
+using Infrastructure.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,11 +37,10 @@ var MyAllowSpecificOrigins = "_myAllowOrigins";
 _services.Configure<AuthSetting>(_configuration.GetSection("AuthSetting"));
 _services.AddHttpContextAccessor();
 _services.AddCoreExtention();
+_services.AddInfrastructureServices(_configuration);
+_services.AddDatabase(_configuration);
 _services.AddServiceContext(_configuration);
-_services.AddCORS(MyAllowSpecificOrigins);
 _services.AddCoreService(_configuration);
-_services.AddInventoryService(_configuration);
-_services.AddSaleService(_configuration);
 
 var app = builder.Build();
 

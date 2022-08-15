@@ -2,6 +2,7 @@
 using WebAPI.ProfileMapper;
 using Application.Core.Services;
 using Application.Common.Abstractions;
+using Infrastructure.Contracts;
 
 namespace WebAPI.Extensions
 {
@@ -10,31 +11,6 @@ namespace WebAPI.Extensions
     /// </summary>
     public static class APIServiceExtensions
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddCORS(this IServiceCollection services, string name)
-        {
-            // CORS
-            services.AddCors(builder =>
-            {
-                builder.AddPolicy(
-                    name: name,
-                    policy =>
-                        {
-                            policy.AllowAnyHeader();
-                            policy.AllowAnyMethod();
-                            policy.AllowAnyOrigin();
-                        }
-                    );
-            });
-
-            return services;
-        }
-
         /// <summary>
         /// 
         /// </summary>

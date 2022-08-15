@@ -18,10 +18,6 @@ namespace Domain.Configurations
             builder.Property(t => t.salt).HasMaxLength(100);
             builder.Property(t => t.mail).HasMaxLength(100).IsRequired();
             builder.Property(t => t.phone).HasMaxLength(15);
-            builder.Property(t => t.deparment_cd).HasMaxLength(15).IsRequired();
-            builder.Property(t => t.branch_cd).HasMaxLength(15).IsRequired();
-            builder.Property(t => t.jobtitle_cd).HasMaxLength(15).IsRequired();
-            builder.Property(t => t.furigana).HasMaxLength(100).IsRequired();
 
 
             builder
@@ -31,26 +27,6 @@ namespace Domain.Configurations
             .HasForeignKey(z => z.role_cd)
             .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-            .HasOne(x => x.branch)
-            .WithMany(y => y.users)
-            .HasPrincipalKey(w => w.code)
-            .HasForeignKey(z => z.branch_cd)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-            .HasOne(x => x.department)
-            .WithMany(y => y.user_departments)
-            .HasPrincipalKey(w => w.code2)
-            .HasForeignKey(z => z.deparment_cd)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-            .HasOne(x => x.jobtitle)
-            .WithMany(y => y.user_jobtitles)
-            .HasPrincipalKey(w => w.code2)
-            .HasForeignKey(z => z.jobtitle_cd)
-            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Application.Common.Abstractions;
-using Application.Core.Services;
 using Framework.Core.Helpers.Auth;
+using Infrastructure.Contracts;
 using Microsoft.Extensions.Options;
 
 namespace WebAPI.Extensions

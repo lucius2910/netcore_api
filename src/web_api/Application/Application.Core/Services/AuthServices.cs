@@ -8,25 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Framework.Core.Helpers.Cache;
 using Domain.Entities;
 using Application.Common.Abstractions;
+using Infrastructure.Contracts;
 
 namespace Application.Core.Services
 {
-    public class AuthSetting
-    {
-        public string JWTSecret { get; set; }
-    }
 
     public class AuthServices : BaseService, IAuthServices
     {
         private readonly AuthSetting settings;
         private readonly IRepository<User> userRepository;
         private readonly IRepository<Role> roleRepository;
-        private readonly ICachingService cachingService;
 
-        public AuthServices(ICachingService _cachingService, IOptions<AuthSetting> _settings, IUnitOfWork _unitOfWork, IMapper _mapper) : base(_unitOfWork, _mapper) 
+        public AuthServices( IOptions<AuthSetting> _settings, IUnitOfWork _unitOfWork, IMapper _mapper) : base(_unitOfWork, _mapper) 
         {
             settings = _settings.Value;
-            cachingService = _cachingService;
             userRepository = _unitOfWork.GetRepository<User>();
             roleRepository = _unitOfWork.GetRepository<Role>();
         }

@@ -25,9 +25,9 @@
     ```
 - Then
     ```sh
-    dotnet-ef migrations add "udpate_databse" --project .\Seisankanri.Model\Model.Core --startup-project .\Seisankanri.Api --context "CoreDbContext" 
+    dotnet-ef migrations add "init_databse" --project .\Infrastructure --startup-project .\Presentation\WebAPI --context "ApplicationDbContext" 
 
-    dotnet-ef database update --project .\Seisankanri.Model\Model.Core --startup-project .\Seisankanri.Api --context "CoreDbContext"
+    dotnet-ef database update --project .\Infrastructure --startup-project .\Presentation\WebAPI --context "ApplicationDbContext" 
     ```
 ## Create new API
 
