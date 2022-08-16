@@ -6,7 +6,7 @@ namespace Application.Core.Contracts
     public class RoleRequest
     {
         public string code { get; set; }
-        public string text { get; set; }
+        public string name { get; set; }
         public string description { get; set; }
         public List<string>? permissions { get; set; }
     }
@@ -17,7 +17,7 @@ namespace Application.Core.Contracts
         {
             // TODO : check code duplicate
             RuleFor(_ => _.code).NotNullOrEmpty().MaximumLength(50);
-            RuleFor(_ => _.text).NotNullOrEmpty().MaximumLength(250);
+            RuleFor(_ => _.name).NotNullOrEmpty().MaximumLength(250);
             RuleFor(_ => _.description).MaximumLength(500);
         }
     }

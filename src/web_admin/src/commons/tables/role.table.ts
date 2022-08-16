@@ -14,8 +14,8 @@ export const colConfig = [
     is_sort: true,
   },
   {
-    key: "text",
-    title: tl("Role", "Text"),
+    key: "name",
+    title: tl("Role", "Name"),
     is_sort: true,
   },
   {

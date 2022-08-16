@@ -130,16 +130,15 @@ const onEdit = (item: any) => {
 const onDeleteItem = (item: any) => {
   confirmDialog.value.confirm(
     tl("Common", "Delete"),
-
     tl("Common", "ConfirmDelete", [item.code]),
     async (res: any) => {
-      if (res) await onDeleteMulti([item]);
+      if (res) await onDeleteMulti(item.id);
     }
   );
 };
 
 const onDeleteMulti = async (data: any) => {
-  await serviceApi.deleteMulti(data.map((x: any) => x.id)).then(() => {
+  await serviceApi.delete(data).then(() => {
     onSearch();
   });
 };

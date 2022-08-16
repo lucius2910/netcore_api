@@ -71,7 +71,8 @@ const getList = async () => {
   await userService
     .getList({
       sort: goSort.value,
-      ...search.value,
+      is_actived: true,
+      search: search.value,
       ...pageConfig.value,
     })
     .then((data) => {

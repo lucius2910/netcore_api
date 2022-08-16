@@ -33,8 +33,8 @@
               class="mt-5"
               @click="onLogin(loginFormRef)"
               :loading="isLoading"
+              :icon="ArrowRight"
             >
-              <vc-icon><Right /></vc-icon>
               {{ tl("Login", "BtnLogin") }}
             </vc-button>
           </vc-input-group>
@@ -51,6 +51,7 @@ import { useRouter } from "vue-router";
 import validate from "@/utils/validate_elp";
 import tl from "@/utils/locallize";
 import type { FormInstance } from "element-plus";
+import { ArrowRight } from '@element-plus/icons-vue';
 
 const isLoading = ref<boolean>(false);
 const authStore = useAuthStore();

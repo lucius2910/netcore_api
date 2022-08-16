@@ -8,17 +8,15 @@
           label-width="120px">
         <vc-row :gutter="20">
           <vc-col :lg="12" :md="12" :sm="24" :xs="24">
-            <vc-input-group required :label="tl('Role', 'Code')">
+            <vc-input-group prop="code" :label="tl('Role', 'Code')">
               <vc-input
                 v-model="role.code"
-                :rules="[ (v: any) => validate.required(v, tl('Role', 'Code'))]"
               />
             </vc-input-group>
 
-            <vc-input-group required :label="tl('Role', 'Text')">
+            <vc-input-group prop="name" :label="tl('Role', 'Name')">
               <vc-input
-                v-model="role.text"
-                :rules="[ (v: any) => validate.required(v, tl('Role', 'Text'))]"
+                v-model="role.name"
               />
             </vc-input-group>
 
@@ -30,12 +28,11 @@
           <vc-col :lg="12" :md="12" :sm="24" :xs="24">
             <vc-input-group :label="tl('Role', 'Permission')">
               <vc-treeview
+                show-checkbox
                 class="select-permission"
+                node_key="code"
                 v-model="role.permissions"
                 :data="functions"
-                fieldTitle="description"
-                fieldItems="items"
-                show-checkbox
               />
             </vc-input-group>
           </vc-col>
@@ -46,16 +43,16 @@
         {{ tl("Common", "BtnBack") }}
       </vc-button>
 
-      <vc-button type="primary" @click="onSave" :loading="isLoading" class="ml-2">
+      <vc-button type="primary" @click="onSave(roleForm)" :loading="isLoading" class="ml-2">
         {{ tl("Common", "BtnSave") }}
       </vc-button>
 
       <vc-button
-        color="error"
-        @click="onDeleteConfirm"
-        :loading="isLoading"
+        type="danger"
         class="ml-2"
-        type="danger" 
+        :loading="isLoading"
+        :icon="Delete"
+        @click="onDeleteConfirm"
         v-if="role.id"
       >
         {{ tl("Common", "BtnDelete") }}
@@ -67,26 +64,34 @@
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue";
-import validate from "@/utils/validate";
 import { useRouter, useRoute } from "vue-router";
 import roleService from "@/services/role.service";
 import functionService from "@/services/function.service";
+import type { FormInstance } from "element-plus";
+import { ArrowLeft, Delete } from '@element-plus/icons-vue';
 import tl from "@/utils/locallize";
-import { ArrowLeft } from '@element-plus/icons-vue';
+import validate from "@/utils/validate_elp";
 
-const roleForm = ref<any>(null);
+const roleForm = ref<FormInstance>();
 const router = useRouter();
 const route = useRoute();
 const isLoading = ref(false);
 const functions = ref<any>([]);
 
 const confirmDialog = ref<any>(null);
-const rules = reactive({});
+const rules = reactive({
+  code: [
+    { required: true, validator: validate.required, trigger: ["blur"] },
+  ],
+  name: [
+    { required: true, validator: validate.required, trigger: ["blur"] },
+  ],
+});
 
 const role = reactive({
   id: null,
   code: null,
-  text: null,
+  name: null,
   description: null,
   permissions: [],
 });
@@ -114,22 +119,26 @@ const goBack = () => {
   router.push({ name: "RoleList" });
 };
 
-const onSave = async () => {
-  role.permissions = role.permissions ?? [];
-  const { valid } = await roleForm.value.validate();
-  if (!valid) return;
-  isLoading.value = true;
+const onSave = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
 
-  if (_id) {
-    await roleService.update(role).finally(() => {
-      isLoading.value = false;
-    });
-  } else {
-    await roleService.create(role).finally(() => {
-      isLoading.value = false;
-      console.log(role);
-    });
-  }
+  await formEl.validate(async (valid) => {
+    if (!valid) return;
+
+    isLoading.value = true;
+    role.permissions = role.permissions ?? [];
+
+    if (_id) {
+      await roleService.update(role).finally(() => {
+        isLoading.value = false;
+      });
+    } else {
+      await roleService.create(role).finally(() => {
+        isLoading.value = false;
+        console.log(role);
+      });
+    }
+  })
 };
 
 const onDeleteConfirm = () => {

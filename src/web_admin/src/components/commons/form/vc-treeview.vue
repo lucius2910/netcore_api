@@ -1,7 +1,7 @@
 <template>
   <el-tree
-    node-key="value"
     ref="treeRef"
+    :node-key=" node_key ?? 'value'"
     :data="data"
     :props="configs"
     @check="onSelected"
@@ -19,6 +19,7 @@ const configs = {
 
 const props = defineProps<{
   data?: [];
+  node_key?: "";
   modelValue: any;
 }>();
 

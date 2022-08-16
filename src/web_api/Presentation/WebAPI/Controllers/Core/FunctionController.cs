@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("get_list")] 
+        [Route("")] 
         public async Task<IActionResult> GetPaged([FromQuery] FunctionPagedRequest request)
         {
             var data = await functionServices.GetPaged(request);
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("create")]
+        [Route("")]
         public async Task<IActionResult> Create([FromBody] FunctionRequest request)
         {
             int count = await functionServices.Create(request);
@@ -85,7 +85,7 @@ namespace WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("update/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] FunctionRequest request)
         {
             var count = await functionServices.Update(id, request);
@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var count = await functionServices.Delete(id);

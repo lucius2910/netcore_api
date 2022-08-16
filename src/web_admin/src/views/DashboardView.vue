@@ -2,7 +2,7 @@
   <div class="vc-page page-home">
     <vc-card class="mb-4 pa-4">
       <h2>Button loading</h2>
-      <vc-button :loading="loading" @click="onClicked"> Click </vc-button>
+      <vc-button :loading="loading" @click="onLogout"> Logout </vc-button>
       <vc-button :loading="loading" @click="getApi">Get api</vc-button>
     </vc-card>
 
@@ -30,19 +30,21 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import userService from "@/services/user.service";
+import { useAuthStore } from "@/stores/auth.store";
 import { useToastStore } from "@/stores/toast.store";
 
 const loading = ref<boolean>(false);
 const confirmDialog = ref<any>(null);
+const authStore = useAuthStore();
+const router = useRouter();
 
-const onClicked = () => {
-  loading.value = true;
-
-  // this is a sample loading when call api
-  setTimeout(() => {
-    loading.value = false;
-  }, 3000);
+const onLogout = () => {
+  authStore.logout();
+  router.push({
+    name: "Login",
+  });
 };
 
 const getApi = async () => {

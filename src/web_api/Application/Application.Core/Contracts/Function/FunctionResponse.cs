@@ -6,6 +6,7 @@
         public string module { get; set; }
         public string code { get; set; }
         public string text { get; set; }
+        public string name { get; set; }
         public string? description { get; set; }
         public string? url { get; set; }
         public string? path { get; set; }

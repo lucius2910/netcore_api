@@ -51,6 +51,7 @@ import accountActions from "@/commons/defines/accountAction";
 import { storeToRefs } from "pinia";
 import tl from "@/utils/locallize";
 import ChangePassword from "./ChangePassword.vue";
+
 const authStore = useAuthStore();
 const router = useRouter();
 const confirmDialog = ref<any>(null);

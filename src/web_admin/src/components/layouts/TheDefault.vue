@@ -1,6 +1,6 @@
 <template>
   <el-container class="v-application">
-    <TheSideBar :isCollapse="isCollapse" v-show="loggedIn" />
+    <TheSideBar :isCollapse="isCollapse" v-if="loggedIn" />
     <el-container class="page-container is-vertical">
       <TheNavBar @toogleSidebar="onCollapse" v-show="loggedIn" />
       <el-main>

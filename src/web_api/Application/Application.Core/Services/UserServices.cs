@@ -119,11 +119,8 @@ namespace Application.Core.Services
             // get permission
             var permissions = permissionRepository.GetQuery()
                                 .ExcludeSoftDeleted()
-                                .Where(x => userRole.Contains(x.role_cd.ToString()))
-                                .Include(x => x.function)
-                                .Select(x => x.function)
-                                .ExcludeSoftDeleted()
-                                .Select(x => x.code)
+                                .Where(x => userRole.Contains(x.role_cd))
+                                .Select(x => x.function_cd)
                                 .ToList();
 
             return permissions;

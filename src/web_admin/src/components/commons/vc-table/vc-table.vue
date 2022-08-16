@@ -2,11 +2,13 @@
   <!-- <vc-card class="pb-3"> -->
   <div class="vc-table">
     <el-table
+      stripe
       style="width: 100%"
+      v-loading="loading"
       :height="height ?? '500px'"
       :data="datas"
-      v-loading="loading"
-      stripe
+      @selection-change="onRowSelected"
+      @sort-change="onSortChange"
     >
       <!-- CHECK BOX -->
       <el-table-column
@@ -20,7 +22,7 @@
 
       <!-- DATA -->
       <template v-for="(col, index) in colConfigs" :key="index" >
-        <el-table-column :prop="col.key" :label="col.title"/>
+        <el-table-column :prop="col.key" :label="col.title" :sortable="col.is_sort"/>
       </template>
 
       <!-- ACTIONS -->
@@ -57,9 +59,6 @@ const props = defineProps<{
   loading: boolean;
 }>();
 
-const rowSelected = ref<any[]>([]);
-const allSelected = ref(false);
-const sortBy = ref<any>("");
 const {
   datas,
   tableConfig,
@@ -92,30 +91,12 @@ const dbClick = (item: any) => {
   if (tableConfig.value.dbClick) emit("dbClick", item);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onSelectAll = () => {
-  rowSelected.value = [];
-  if (allSelected.value) {
-    Object.assign(rowSelected.value, datas.value);
-  }
-  emit("rowSelected", rowSelected.value);
-};
-
 /**
  * Event clicked row check box
  * Emit rowSelected
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onRowSelected = (item: any) => {
-  const indexCheck = rowSelected.value.indexOf(item);
-  if (indexCheck == -1) {
-    rowSelected.value.push(item);
-  } else {
-    rowSelected.value.splice(indexCheck, 1);
-  }
-
-  allSelected.value = rowSelected.value.length == datas.value.length;
-  emit("rowSelected", rowSelected.value);
+const onRowSelected = (items: any[]) => {
+  emit("rowSelected", items);
 };
 
 /**
@@ -123,24 +104,13 @@ const onRowSelected = (item: any) => {
  * Emit sorted
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onSort = (index: number) => {
-  colSettings.value = colSettings.value.map((el, i) => {
-    if (i == index) {
-      if (!el.sort) {
-        el.sort = "asc";
-      } else {
-        el.sort = el.sort == "asc" ? "desc" : null;
-      }
-    } else {
-      el.sort = null;
-    }
-    return el;
-  });
-  sortBy.value = colSettings.value
-    .filter((item) => item.sort)
-    .map((item) => `${item.key_field ?? item.key}.${item.sort}`)
-    .join(",");
-  emit("sorted", sortBy.value);
+const onSortChange = (config: any) => {
+  if(config.column == null) {
+     emit("sorted", null);
+     return;
+  }
+
+  emit("sorted", `${config.prop}.${config.order == 'ascending' ? 'asc' : 'desc'}`);
 };
 
 </script>
