@@ -72,7 +72,7 @@ const loading = ref<boolean>(false);
 const goSort = ref<any>("");
 const confirmDialog = ref<any>(null);
 const search = ref<any>({});
-const pageConfig = ref<any>({});
+const pageConfig = ref<any>({size: 15});
 
 onMounted(async () => {
   onSearch();
