@@ -26,11 +26,11 @@ namespace Infrastructure
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 
                 // auto migration
-                context.Database.MigrateAsync();
+                context.Database.Migrate();
 
                 // Seed the database.
-                InitializeUserAndRoles(context);
-                InitializeFunctionAndResource(context);
+                // InitializeUserAndRoles(context);
+                // InitializeFunctionAndResource(context);
             }
         }
 

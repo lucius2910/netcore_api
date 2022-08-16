@@ -36,9 +36,9 @@ var MyAllowSpecificOrigins = "_myAllowOrigins";
 // Register core extention: AutoMapper, FluentValidation
 _services.Configure<AuthSetting>(_configuration.GetSection("AuthSetting"));
 _services.AddHttpContextAccessor();
+_services.AddDatabase(_configuration);
 _services.AddCoreExtention();
 _services.AddInfrastructureServices(_configuration);
-_services.AddDatabase(_configuration);
 _services.AddServiceContext(_configuration);
 _services.AddCoreService(_configuration);
 
@@ -54,6 +54,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
+app.ConfigureCoreDb();
 
 // global error handler
 app.UseMiddleware<ErrorHandlerMiddleware>();

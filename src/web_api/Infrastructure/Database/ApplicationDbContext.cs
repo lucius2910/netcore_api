@@ -20,5 +20,10 @@ namespace Infrastructure
         public virtual DbSet<LogAction>? LogAction { get; set; }
         public virtual DbSet<LogException>? LogException { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);    
+        }
+
     }
 }
