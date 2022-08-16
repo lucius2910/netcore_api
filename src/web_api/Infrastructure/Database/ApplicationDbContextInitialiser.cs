@@ -26,7 +26,7 @@ namespace Infrastructure
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 
                 // auto migration
-                context.Database.Migrate();
+                context.Database.MigrateAsync();
 
                 // Seed the database.
                 // InitializeUserAndRoles(context);

@@ -18,6 +18,13 @@ namespace Model.Core.Configurations
             builder.Property(t => t.url).HasMaxLength(250);
             builder.Property(t => t.path).HasMaxLength(250);
             builder.Property(t => t.method).HasMaxLength(10);
+
+            builder
+           .HasOne(x => x.parent)
+           .WithMany(y => y.childs)
+           .HasPrincipalKey(w => w.parent_cd)
+           .HasForeignKey(z => z.code)
+           .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

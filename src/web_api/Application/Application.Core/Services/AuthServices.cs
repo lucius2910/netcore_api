@@ -17,12 +17,14 @@ namespace Application.Core.Services
     {
         private readonly AuthSetting settings;
         private readonly IRepository<User> userRepository;
+        private readonly IRepository<UserRole> userRoleRepository;
         private readonly IRepository<Role> roleRepository;
 
         public AuthServices( IOptions<AuthSetting> _settings, IUnitOfWork _unitOfWork, IMapper _mapper) : base(_unitOfWork, _mapper) 
         {
             settings = _settings.Value;
             userRepository = _unitOfWork.GetRepository<User>();
+            userRoleRepository = _unitOfWork.GetRepository<UserRole>();
             roleRepository = _unitOfWork.GetRepository<Role>();
         }
 
@@ -85,8 +87,8 @@ namespace Application.Core.Services
                         .FirstOrDefault();
 
 
-            //if (user == null || !CryptographyProcessor.AreEqual(request.current_password, user.password, user.salt))
-            //    return Task.FromResult(0);
+            if (user == null || !CryptographyProcessor.AreEqual(request.current_password, user.hashpass, user.salt))
+                return Task.FromResult(0);
 
             user.salt = CryptographyProcessor.CreateSalt(20);
             user.hashpass = CryptographyProcessor.GenerateHash(request.new_password, user.salt);
@@ -97,11 +99,17 @@ namespace Application.Core.Services
 
         public bool CheckUserAuthorized(Guid user_id, string path, string action)
         {
-            var userRole = userRepository.GetQuery().ExcludeSoftDeleted().Where(x => x.id == user_id).Select(x => x.role_cd).FirstOrDefault();
+            var userRole = userRoleRepository.GetQuery().ExcludeSoftDeleted()
+                            .Include(x => x.user)
+                            .Where(x => x.user.id == user_id)
+                            .Select(x => x.role_cd)
+                            .Distinct()
+                            .ToList();
+
             var permissions = roleRepository
                                .GetQuery()
                                .ExcludeSoftDeleted()
-                               .Where(x => x.code == userRole)
+                               .Where(x => userRole.Contains(x.code))
                                .Include(x => x.permissions)
                                .SelectMany(x => x.permissions)
                                .ExcludeSoftDeleted()
@@ -111,6 +119,7 @@ namespace Application.Core.Services
                                .Distinct()
                                .OrderBy(x => x.code)
                                .ToArray();
+
             var check = permissions.Where(x => x.path.ToLower() == path.ToLower() && x.method.ToUpper() == action).FirstOrDefault();
             return check != null ? true : false;
         }

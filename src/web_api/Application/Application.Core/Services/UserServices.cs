@@ -14,11 +14,13 @@ namespace Application.Core.Services
     public class UserServices : BaseService, IUserServices
     {
         private readonly IRepository<User> userRepository;
+        private readonly IRepository<UserRole> userRoleRepository;
         private readonly IRepository<Permission> permissionRepository;
 
         public UserServices(IUnitOfWork _unitOfWork, IMapper _mapper): base(_unitOfWork, _mapper)
         {
             userRepository = _unitOfWork.GetRepository<User>();
+            userRoleRepository = _unitOfWork.GetRepository<UserRole>();
             permissionRepository = _unitOfWork.GetRepository<Permission>();
         }
 
@@ -27,7 +29,6 @@ namespace Application.Core.Services
             var data = userRepository
                         .GetQuery()
                         .ExcludeSoftDeleted()
-                        .Where(x => string.IsNullOrEmpty(request.role_cd) || x.role_cd.ToLower().Equals(request.role_cd.ToLower()))
                         .Where(x => string.IsNullOrEmpty(request.code) || x.code.ToLower().Contains(request.code.ToLower()))
                         .Where(x => x.is_actived.Equals(request.is_actived))
                         .Where(x => string.IsNullOrEmpty(request.full_name) || x.full_name.ToLower().Contains(request.full_name.ToLower()))
@@ -108,17 +109,17 @@ namespace Application.Core.Services
         
         private async Task<List<string>> GetPermissionsByUserId(Guid user_id)
         {
-            // get role
-            var role_ids = userRepository.GetQuery()
-                            .Where(x => x.id == user_id)
-                            .ExcludeSoftDeleted()
+            var userRole = userRoleRepository.GetQuery().ExcludeSoftDeleted()
+                            .Include(x => x.user)
+                            .Where(x => x.user.id == user_id)
                             .Select(x => x.role_cd)
-                            .ToArray();
+                            .Distinct()
+                            .ToList();
 
             // get permission
             var permissions = permissionRepository.GetQuery()
                                 .ExcludeSoftDeleted()
-                                .Where(x => role_ids.Contains(x.role_cd.ToString()))
+                                .Where(x => userRole.Contains(x.role_cd.ToString()))
                                 .Include(x => x.function)
                                 .Select(x => x.function)
                                 .ExcludeSoftDeleted()

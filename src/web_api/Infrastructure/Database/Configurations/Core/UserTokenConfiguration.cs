@@ -20,7 +20,7 @@ namespace Model.Core.Configurations
 
             builder
             .HasOne(x => x.user)
-            .WithMany(x => x.usertoken)
+            .WithMany(x => x.user_token)
             .HasPrincipalKey(w => w.code)
             .HasForeignKey(z => z.user_cd)
             .OnDelete(DeleteBehavior.Restrict);

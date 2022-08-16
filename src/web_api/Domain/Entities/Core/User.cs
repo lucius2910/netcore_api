@@ -15,17 +15,15 @@ namespace Domain.Entities
 
         public string? salt { get; set; }
 
-        public string? role_cd { get; set; }
-
         public string? mail { get; set; }
 
         public string? phone { get; set; }
 
         public bool? is_actived { get; set; }
 
-        public virtual Role? role { get; set; }
+        public virtual ICollection<UserRole>? user_roles { get; set; }
 
-        public ICollection<UserToken>? usertoken { get; set; }
+        public virtual ICollection<UserToken>? user_token { get; set; }
 
         public User()
         {

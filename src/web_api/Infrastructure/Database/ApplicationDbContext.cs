@@ -9,12 +9,13 @@ namespace Infrastructure
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
-
-        public virtual DbSet<MasterCode>? MasterCodes { get; set; }
         public virtual DbSet<User>? Users { get; set; }
         public virtual DbSet<Role>? Roles { get; set; }
         public virtual DbSet<Permission>? Permissions { get; set; }
         public virtual DbSet<Function>? Functions { get; set; }
+
+        public virtual DbSet<MasterCode>? MasterCodes { get; set; }
+        public virtual DbSet<Seq>? Seqs { get; set; }
         public virtual DbSet<Resource>? Resources { get; set; }
 
         public virtual DbSet<LogAction>? LogAction { get; set; }

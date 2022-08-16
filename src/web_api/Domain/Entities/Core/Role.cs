@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         public string is_actived { get; set; }
 
-        public virtual ICollection<User>? users { get; set; }
+        public virtual ICollection<UserRole>? user_role { get; set; }
 
         public virtual ICollection<Permission> permissions { get; set; }
 

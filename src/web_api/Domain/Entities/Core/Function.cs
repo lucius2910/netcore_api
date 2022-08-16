@@ -28,7 +28,9 @@ namespace Domain.Entities
 
         public Function? parent { get; set; }
 
-        public virtual ICollection<Permission> permissions { get; set; }
+        public virtual ICollection<Function>? childs { get; set; }
+
+        public virtual ICollection<Permission>? permissions { get; set; }
 
 
         public Function()
