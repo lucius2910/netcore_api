@@ -1,3 +1,13 @@
+
+INSERT INTO public."function" (id,"module",code,"name",description,url,"path","method",parent_cd,"order",is_active,icon,created_at,created_by,updated_at,updated_by,del_flg) VALUES
+	 ('16576756-8265-4013-bf20-98fa153fbb39','Core','M0001','System setting','システム設定',NULL,NULL,NULL,NULL,3,true,'mdi-cogs','2022-07-28 21:43:51.941681','e5cd7986-51b5-4f19-bc4f-0756dfcf9089',NULL,NULL,false),
+	 ('b63d0d18-9290-4cb3-adcd-7bb0b10b5af9','Core','M0002','Master','マスター管理',NULL,NULL,NULL,NULL,2,true,'mdi-cogs','2022-07-28 21:43:51.943593','38bdc9fc-c3b1-42e1-ba94-7daeec1a0294',NULL,NULL,false),
+     ('626c6e6a-167e-4037-93f6-9063866a4af7','Core','S00020','Function','働き','/function','','','M0001',3,true,NULL,'2022-07-28 21:43:51.954385','b2dae0ad-a099-49f8-b804-398b05923554',NULL,NULL,false),
+	 ('7000e0fc-53f1-4c35-b82e-f5500885c374','Core','S00030','Resource','資源','/resource',NULL,NULL,'M0001',4,true,NULL,'2022-07-28 21:43:51.911885','7b33c9ad-10b6-4ddf-ab57-1a9b653efce3',NULL,NULL,false),
+	 ('813da262-1396-4771-9b78-ee48f4a70103','Core','S00010','Role','役割','/role',NULL,NULL,'M0001',2,true,NULL,'2022-07-28 21:43:51.952296','27d5b42a-a7de-4ec3-8ec0-a177ee01de6f',NULL,NULL,false),
+	 ('8aa372a0-a186-4cca-9992-aff6a8076cf3','Core','S00040','Master code','マスターコード','/master',NULL,NULL,'M0001',5,true,NULL,'2022-07-28 21:43:51.950923','a2e24c68-2838-4d24-84ee-8544bd8af37f',NULL,NULL,false),
+     ('5814f13f-254a-4fab-927b-62eb954e173b','Core','S00001','User','ユーザー','/user',NULL,NULL,'M0002',1,true,NULL,'2022-07-28 21:43:51.944275','4441a06d-ce3a-4e37-b375-fb3fa71eec56',NULL,NULL,false);
+
 INSERT INTO public."function" (id,"module",code,"name",description,url,"path","method",parent_cd,"order",is_active,icon,created_at,created_by,updated_at,updated_by,del_flg) VALUES
 	 ('0b32ff5c-6c36-40fe-aa3a-d65c70000aea','Core','F00006','Delete user','ユーザーを削除',NULL,'api/user/{id}','DELETE','S00001',5,true,NULL,'2022-07-28 21:43:51.945564','e0201460-8694-4948-9c1f-d0b34552c251',NULL,NULL,false),
 	 ('1ec680f6-5929-46dd-85f1-8fb9685d9955','Core','F00001','Change user password','ユーザーパスワードの変更',NULL,'api/auth/change-password','PUT',NULL,NULL,true,NULL,'2022-07-28 21:43:51.93809','33f2b725-a42e-4d9f-91a7-7ef2af838f7c',NULL,NULL,false),
@@ -7,22 +17,15 @@ INSERT INTO public."function" (id,"module",code,"name",description,url,"path","m
 	 ('3c7f8c33-d533-4043-8fdc-784ba3bebaf6','Core','F00016','Get list role','リストの役割を取得する',NULL,'api/role','GET','S00010',1,true,NULL,'2022-07-28 21:43:51.958818','eeb9079e-c33c-44a0-a6ae-59beee75cb58',NULL,NULL,false),
 	 ('42d28900-2307-4936-bf03-4c2e9c861bd9','Core','F00002','Get list user','リストユーザーを取得',NULL,'api/user','GET','S00001',1,false,NULL,'2022-07-28 21:43:51.939714','0a1f2551-8a60-45f3-bba8-98bf836c8880',NULL,NULL,false),
 	 ('4e04235e-4f06-4182-aade-642989aa6861','Core','F00005','Update user','ユーザーを更新',NULL,'api/user/{id}','PUT','S00001',4,true,NULL,'2022-07-28 21:43:51.94496','d64039e6-8a0c-4fd5-a47a-4146a2235ac6',NULL,NULL,false),
-	 ('5814f13f-254a-4fab-927b-62eb954e173b','Core','S00001','User','ユーザー','/user',NULL,NULL,'M0002',1,true,NULL,'2022-07-28 21:43:51.944275','4441a06d-ce3a-4e37-b375-fb3fa71eec56',NULL,NULL,false),
+
 	 ('6040735a-1158-44a2-8cba-94d0d38edf34','Core','F00013','Update role','役割を更新',NULL,'api/role/{id}','PUT','S00010',4,true,NULL,'2022-07-28 21:43:51.948849','ecde3b60-70b7-4af4-add2-f6f05adfa68d',NULL,NULL,false);
 INSERT INTO public."function" (id,"module",code,"name",description,url,"path","method",parent_cd,"order",is_active,icon,created_at,created_by,updated_at,updated_by,del_flg) VALUES
-	 ('626c6e6a-167e-4037-93f6-9063866a4af7','Core','S00020','Function','働き','/function','','','M0001',3,true,NULL,'2022-07-28 21:43:51.954385','b2dae0ad-a099-49f8-b804-398b05923554',NULL,NULL,false),
-	 ('7000e0fc-53f1-4c35-b82e-f5500885c374','Core','S00030','Resource','資源','/resource',NULL,NULL,'M0001',4,true,NULL,'2022-07-28 21:43:51.911885','7b33c9ad-10b6-4ddf-ab57-1a9b653efce3',NULL,NULL,false),
-	 ('813da262-1396-4771-9b78-ee48f4a70103','Core','S00010','Role','役割','/role',NULL,NULL,'M0001',2,true,NULL,'2022-07-28 21:43:51.952296','27d5b42a-a7de-4ec3-8ec0-a177ee01de6f',NULL,NULL,false),
-	 ('8aa372a0-a186-4cca-9992-aff6a8076cf3','Core','S00040','Master code','マスターコード','/master',NULL,NULL,'M0001',5,true,NULL,'2022-07-28 21:43:51.950923','a2e24c68-2838-4d24-84ee-8544bd8af37f',NULL,NULL,false),
 	 ('adb25282-39db-4eb9-80e2-c575a499131c','Core','F00012','Create new role','新しい役割を作成する',NULL,'api/role','POST','S00010',3,true,NULL,'2022-07-28 21:43:51.948156','ccecd4d2-d110-4d3d-a324-1d424b3ad94d',NULL,NULL,false),
 	 ('afc3a308-a2c9-4c35-8488-1225b11d7504','Core','F00007','Delete multi user','マルチユーザーを削除する',NULL,'api/user/delete-multi','DELETE','S00001',6,true,NULL,'2022-07-28 21:43:51.946864','ff6ad19d-afad-479d-8399-7158be8093b8',NULL,NULL,false),
 	 ('c598a7fd-344b-4b88-9d25-e63e4339319e','Core','F00003','View detail user','詳細ユーザーを表示',NULL,'api/user/{id}','GET','S00001',2,true,NULL,'2022-07-28 21:43:51.946254','b6989fc4-0fc0-4bbe-aac9-a84573ed6e8a',NULL,NULL,false),
 	 ('ce872625-43fa-46b1-8cb9-9469a911d053','Core','F00014','Delete role','役割を削除する',NULL,'api/role/{id}','DELETE','S00010',5,true,NULL,'2022-07-28 21:43:51.949494','7ef4003b-b212-441e-ac15-8fcdb4fb93fa',NULL,NULL,false),
 	 ('dcb39b81-3453-44b1-8ba4-7e6281cc27aa','Core','F00004','Create user','ユーザーを作成',NULL,'api/user','POST','S00001',3,true,NULL,'2022-07-28 21:43:51.939072','bc9731f7-e37a-4c1a-a76b-57bfc5873743',NULL,NULL,false),
 	 ('2c0035d2-d44d-4dc1-bb79-352c6d526259','Core','S00000','Dashboard','ダッシュボード','/','',NULL,NULL,1,true,'mdi-view-dashboard','2022-07-28 21:43:51.951611','2807fba6-bd62-485d-8b2f-17506e1d88ae',NULL,NULL,false);
-INSERT INTO public."function" (id,"module",code,"name",description,url,"path","method",parent_cd,"order",is_active,icon,created_at,created_by,updated_at,updated_by,del_flg) VALUES
-	 ('16576756-8265-4013-bf20-98fa153fbb39','Core','M0001','System setting','システム設定',NULL,NULL,NULL,NULL,3,true,'mdi-cogs','2022-07-28 21:43:51.941681','e5cd7986-51b5-4f19-bc4f-0756dfcf9089',NULL,NULL,false),
-	 ('b63d0d18-9290-4cb3-adcd-7bb0b10b5af9','Core','M0002','Master','マスター管理',NULL,NULL,NULL,NULL,2,true,'mdi-cogs','2022-07-28 21:43:51.943593','38bdc9fc-c3b1-42e1-ba94-7daeec1a0294',NULL,NULL,false);
 
 
 INSERT INTO public.master_code (id,"type","key",value,created_at,created_by,updated_at,updated_by,del_flg) VALUES
