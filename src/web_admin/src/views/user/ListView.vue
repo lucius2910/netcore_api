@@ -22,7 +22,7 @@
 
     <vc-row class="box-search mt-4">
       <vc-col :span="10" class="d-flex">
-        <vc-input v-model="user_name" hide-details="true" :prefix-icon="Search"></vc-input>
+        <vc-input v-model="search" hide-details="true" :prefix-icon="Search"></vc-input>
         <vc-button class="ml-2" @click="getList" type="primary" :icon="Search">
           {{ tl("Common", "BtnSearch") }}
         </vc-button>
@@ -56,7 +56,7 @@ import { useRouter } from "vue-router";
 import userService from "@/services/user.service";
 import { colConfig, tableConfig } from "@/commons/tables/user.table";
 import tl from "@/utils/locallize";
-import { Search, Delete, Plus, ArrowRight, Upload, Download } from '@element-plus/icons-vue';
+import { Search, Plus, ArrowRight, Upload, Download } from '@element-plus/icons-vue';
 import DetailModal from './DetailModal.vue'
 
 const users = ref<any[]>([]);

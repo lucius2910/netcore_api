@@ -2,8 +2,8 @@
 {
     public static class DateTimeExtensions
     {
-        private static string _dateFormat = "yyyy/MM/dd";
-        private static string _dateTimeFormat = "yyyy/MM/dd hh:mm:ss";
+        private static string _dateFormat = "yyyy-MM-dd";
+        private static string _dateTimeFormat = "yyyy-MM-dd hh:mm:ss";
 
         public static DateTime? ToDate(this string dateStr)
         {

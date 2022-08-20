@@ -13,7 +13,7 @@ namespace Application.Core.Contracts
         public string mail { get; set; }
         public string? phone { get; set; }
         public bool? is_actived { get; set; }
-        public string? role_cd { get; set; }
+        public List<string>? role_cd { get; set; }
 
     }
 
@@ -28,7 +28,6 @@ namespace Application.Core.Contracts
             RuleFor(_ => _.user_name).NotNullOrEmpty().MaximumLength(50);
             RuleFor(_ => _.mail).NotNullOrEmpty().EmailAddress().MaximumLength(50);
             RuleFor(_ => _.phone).NotNullOrEmpty().MaximumLength(15);
-            RuleFor(_ => _.role_cd).NotNullOrEmpty().MaximumLength(10).MasterMustExist(repo, _ls, "code");
         }
     }
 }

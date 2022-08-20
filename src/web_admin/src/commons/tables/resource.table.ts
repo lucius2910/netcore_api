@@ -2,7 +2,7 @@ import tl from "@/utils/locallize";
 
 export const tableConfig = {
   showPaging: true,
-  showIndex: true,
+  index: true,
   dbClick: true,
 };
 

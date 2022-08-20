@@ -80,13 +80,16 @@ namespace Application.Common.Extensions
             var data = repo.GetQuery().ExcludeSoftDeleted().ToArray();
             return ruleBuilder.Custom((x, y) =>
             {
-                string data_feild;
-                data_feild = x == null ? string.Empty : x.ToString();
+                if (x != null)
+                {
+                    string data_feild;
+                    data_feild = x == null ? string.Empty : x.ToString();
 
-                var result = data.Select(m => m.GetType().GetProperty(field_name).GetValue(m, null).ToString())
-                                  .Where(y => data_feild.Equals(y)).FirstOrDefault();
-                if (result == null)
-                    y.AddFailure(y.DisplayName, ls.Get(Modules.Core, "Message", MessageKey.E_005));
+                    var result = data.Select(m => m.GetType().GetProperty(field_name).GetValue(m, null).ToString())
+                                      .Where(y => data_feild.Equals(y)).FirstOrDefault();
+                    if (result == null)
+                        y.AddFailure(y.DisplayName, ls.Get(Modules.Core, "Message", MessageKey.E_005));
+                }
             });
         }
     }

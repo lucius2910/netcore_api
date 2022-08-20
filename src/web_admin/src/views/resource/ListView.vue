@@ -78,11 +78,11 @@
             </vc-button>
             <vc-button
               class="ml-2"
-              color="error"
-              @click="onDeleteConfirm"
+              type="danger"
+              v-show="detailItem.id"
               :loading="isLoading"
               :icon="Delete"
-              v-show="detailItem.id"
+              @click="onDeleteConfirm"
             >
               {{ tl("Common", "BtnDelete") }}
             </vc-button>
@@ -105,6 +105,7 @@ import { Delete, Plus} from '@element-plus/icons-vue';
 import type { FormInstance } from "element-plus";
 
 const defaultItem = {
+  id: null,
   lang: "ja",
   module: null,
   screen: null,
