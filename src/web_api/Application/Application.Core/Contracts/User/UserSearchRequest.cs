@@ -10,13 +10,7 @@ namespace Application.Core.Contracts
 
         public string? sort { get; set; }
 
-        public string? role_cd { get; set; }
-
-        public string? code { get; set; }
-
-        public bool is_actived { get; set; }
-
-        public string? full_name { get; set; }
+        public string? search { get; set; }
 
     }
 }

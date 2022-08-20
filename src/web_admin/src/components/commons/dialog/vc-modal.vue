@@ -5,6 +5,9 @@
         <h4 :id="titleId" :class="titleClass">{{title}}</h4>
         <div>
           <slot name="acttion"></slot>
+          <vc-button type="info" class="btn-close" @click="onClose">
+            <el-icon><Close /></el-icon>
+          </vc-button>
         </div>
       </div>
     </template>
@@ -13,34 +16,34 @@
 </template>
 
 <script setup lang="ts">
-
 import { ref, toRef } from "vue";
-// import { ElMessageBox } from 'element-plus'
+import { Close } from '@element-plus/icons-vue';
 
 const props = defineProps<{
   title?: string
 }>()
 
 const is_show = ref(false);
+const is_close = ref(false);
 const title = toRef(props, "title");
 
-const handleClose = (done: () => void) => {
-  done();
-  // ElMessageBox.confirm('Are you sure to close this dialog?')
-  //   .then(() => {
-  //     done()
-  //   })
-  //   .catch(() => {
-  //     // catch error
-  //   })
+const handleClose = () => {
+  if(is_close.value) close();
+}
+
+const onClose = () => {
+  is_close.value = true;
+  handleClose();
 }
 
 const open = () => {
   is_show.value = true;
+  is_close.value = false;
 };
 
 const close = () => {
   is_show.value = false;
+  is_close.value = false;
 };
 
 defineExpose({

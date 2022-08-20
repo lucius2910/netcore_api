@@ -12,21 +12,18 @@
               <vc-input-group required :label="tl('MasterCode', 'Type')">
                 <vc-input
                   v-model="master.type"
-                  :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Type'))]"
                 />
               </vc-input-group>
 
               <vc-input-group required :label="tl('MasterCode', 'Key')">
                 <vc-input
                   v-model="master.key"
-                  :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Key'))]"
                 />
               </vc-input-group>
 
               <vc-input-group required :label="tl('MasterCode', 'Value')">
                 <vc-input
-                  v-model="master"
-                  :rules="[ (v: any) => validate.required(v,  tl('MasterCode', 'Value'))]"
+                  v-model="master.value"
                 />
               </vc-input-group>
             </vc-col>

@@ -1,11 +1,11 @@
 import tl from "@/utils/locallize";
 
 export const tableConfig = {
-  checkbox: false,
-  action: true,
+  checkbox: true,
+  action: false,
   showPaging: true,
   dbClick: false,
-  index: false,
+  index: true,
 };
 
 export const colConfig = [

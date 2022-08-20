@@ -29,9 +29,8 @@ namespace Application.Core.Services
             var data = userRepository
                         .GetQuery()
                         .ExcludeSoftDeleted()
-                        .Where(x => string.IsNullOrEmpty(request.code) || x.code.ToLower().Contains(request.code.ToLower()))
-                        .Where(x => x.is_actived.Equals(request.is_actived))
-                        .Where(x => string.IsNullOrEmpty(request.full_name) || x.full_name.ToLower().Contains(request.full_name.ToLower()))
+                        .Where(x => string.IsNullOrEmpty(request.search) || x.code.ToLower().Contains(request.search.ToLower()))
+                        .Where(x => string.IsNullOrEmpty(request.search) || x.name.ToLower().Contains(request.search.ToLower()))
                         .SortBy(request.sort)
                         .ToPagedList(request.page, request.size);
 

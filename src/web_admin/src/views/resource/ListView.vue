@@ -45,23 +45,24 @@
         <vc-card class="pa-4">
           <vc-card-content>
             <el-form 
-              ref="roleForm"
+              label-width="70px"
+              ref="detailForm"
               :model="detailItem"
-              :rules="rules"
-              label-width="70px">
+              :rules="rules">
               <vc-row>
                 <vc-col>
                   <vc-input-group
                     required
                     :label="tl('Resource', 'Key')"
                     class="mb-2"
+                    prop="key"
                   >
                     <vc-input
                       v-model="detailItem.key"
                     >
                     </vc-input>
                   </vc-input-group>
-                  <vc-input-group required :label="tl('Resource', 'Value')">
+                  <vc-input-group required :label="tl('Resource', 'Value')" prop="text">
                     <vc-textarea
                       rows="17"
                       v-model="detailItem.text"
@@ -72,7 +73,7 @@
             </el-form>
           </vc-card-content>
           <vc-card-action class="d-flex pa-3">
-            <vc-button @click="onSave" :loading="isLoading" class="ml-2" type="primary">
+            <vc-button @click="onSave(detailForm)" :loading="isLoading" class="ml-2" type="primary">
               {{ tl("Common", "BtnSave") }}
             </vc-button>
             <vc-button
@@ -81,7 +82,7 @@
               @click="onDeleteConfirm"
               :loading="isLoading"
               :icon="Delete"
-              v-if="detailItem.id"
+              v-show="detailItem.id"
             >
               {{ tl("Common", "BtnDelete") }}
             </vc-button>
@@ -101,6 +102,7 @@ import tl from "@/utils/locallize";
 import validate from "@/utils/validate";
 import { colConfig, tableConfig } from "@/commons/tables/resource.table";
 import { Delete, Plus} from '@element-plus/icons-vue';
+import type { FormInstance } from "element-plus";
 
 const defaultItem = {
   lang: "ja",
@@ -110,18 +112,19 @@ const defaultItem = {
   text: null,
 };
 
-const goSort = ref<any>("");
-const detailItem = ref<any>(defaultItem);
-const searchModule = ref<any>("");
 const modulelist = ref<any>([]);
-const searchScreen = ref<any>("");
 const screenList = ref<any>([]);
-const pageConfig = ref<any>({size: 30});
 const resourceList = ref<any[]>([]);
+
+const goSort = ref<any>("");
+const searchModule = ref<any>("");
+const searchScreen = ref<any>("");
+const pageConfig = ref<any>({size: 30});
 const isLoading = ref<boolean>(false);
-const resourceForm = ref<any>(null);
+const detailForm = ref<FormInstance>();
 const confirmDialog = ref<any>(null);
 
+const detailItem = reactive({...defaultItem});
 
 const rules = reactive({
   key: [
@@ -134,7 +137,7 @@ onMounted(async () => {
 });
 
 const onDbClick = (selected: any) => {
-  detailItem.value = { ...selected };
+  Object.assign(detailItem, selected);
 };
 
 const onSort = async (sortBy: any) => {
@@ -145,12 +148,12 @@ const onSort = async (sortBy: any) => {
 const onSelectedModule = async () => {
   await getListScreen();
   await getListResource();
-  detailItem.value.module = searchModule.value;
+  detailItem.module = searchModule.value;
 };
 
 const onSelectedScreen = async () => {
   await getListResource();
-  detailItem.value.screen = searchScreen.value;
+  detailItem.screen = searchScreen.value;
 };
 
 const getListModule = async () => {
@@ -205,30 +208,33 @@ const getListResource = async () => {
     });
 };
 
-const onSave = async () => {
-  const { valid } = await resourceForm.value.validate();
-  if (!valid) return;
+const onSave = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
 
-  isLoading.value = true;
+  await formEl.validate(async (valid) => {
+    if (!valid) return;
 
-  if (detailItem.value.id) {
-    await resourceService.update(detailItem.value).finally(() => {
-      isLoading.value = false;
-    });
-  } else {
-    await resourceService.create(detailItem.value).finally(() => {
-      isLoading.value = false;
-    });
-  }
+    isLoading.value = true;
 
-  await getListResource();
-  onAddNew();
+    if (detailItem.id) {
+      await resourceService.update(detailItem).finally(() => {
+        isLoading.value = false;
+      });
+    } else {
+      await resourceService.create(detailItem).finally(() => {
+        isLoading.value = false;
+      });
+    }
+
+    await getListResource();
+    onAddNew();
+  })
 };
 
 const onDeleteConfirm = () => {
   confirmDialog.value.confirm(
     tl("Common", "Delete"),
-    tl("Common", "ConfirmDelete", [detailItem.value.key]),
+    tl("Common", "ConfirmDelete", [detailItem.key]),
     async (res: any) => {
       if (res) await onDelete();
     }
@@ -242,7 +248,7 @@ const onPageChanged = async (page: any) => {
 
 const onDelete = async () => {
   isLoading.value = false;
-  await resourceService.delete(detailItem.value.id).finally(async () => {
+  await resourceService.delete(detailItem.id).finally(async () => {
     isLoading.value = false;
     await getListResource();
     onAddNew();
@@ -250,6 +256,6 @@ const onDelete = async () => {
 };
 
 const onAddNew = () => {
-  detailItem.value = defaultItem;
+  Object.assign(detailItem, defaultItem)
 };
 </script>

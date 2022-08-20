@@ -9,16 +9,24 @@
       :data="datas"
       @selection-change="onRowSelected"
       @sort-change="onSortChange"
+      @row-dblclick="onRowDbClick"
     >
+      <!-- INDEX -->
+      <el-table-column 
+        label="#" 
+        width="50" 
+        type="index" 
+        align="center"
+        header-align="center"
+        v-if="tableConfig.index" 
+      />
+
       <!-- CHECK BOX -->
       <el-table-column
         type="selection"
-        width="50"
+        width="40"
         v-if="tableConfig.checkbox"
       />
-
-      <!-- INDEX -->
-      <el-table-column type="index" v-if="tableConfig.index" />
 
       <!-- DATA -->
       <template v-for="(col, index) in colConfigs" :key="index" >
@@ -86,8 +94,7 @@ const onPageChanged = (page: any) => {
   emit("pageChanged", page);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const dbClick = (item: any) => {
+const onRowDbClick = (item: any) => {
   if (tableConfig.value.dbClick) emit("dbClick", item);
 };
 

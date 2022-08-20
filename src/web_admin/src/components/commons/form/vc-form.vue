@@ -1,5 +1,5 @@
 <template>
-  <el-form label-position="left" label-width="120px">
+  <el-form label-position="right" label-width="120px">
     <slot></slot>
   </el-form>
 </template>

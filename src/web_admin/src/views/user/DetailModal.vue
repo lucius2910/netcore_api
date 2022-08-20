@@ -6,13 +6,13 @@
           :model="user"
           :rules="rules"
           label-width="150px"
-          label-position="left"
+          label-position="right"
         >
           <vc-row :gutter="20">
             <vc-col :lg="12" :md="12" :sm="24" :xs="24">
-              <vc-input-group prop="code" :label="tl('User', 'Code')">
+              <!-- <vc-input-group prop="code" :label="tl('User', 'Code')">
                 <vc-input disabled v-model="user.code" />
-              </vc-input-group>
+              </vc-input-group> -->
 
               <vc-input-group
                 required
@@ -49,7 +49,7 @@
               <vc-input-group
                 required
                 prop="birthday"
-                :label="tl('User', 'BidthDay')"
+                :label="tl('User', 'BirthDay')"
               >
                 <vc-input-date v-model="user.birthday" />
               </vc-input-group>
@@ -73,13 +73,9 @@
 
             <vc-col :lg="12" :md="12" :sm="24" :xs="24">
               <vc-input-group :label="tl('User', 'Role')">
-                <vc-treeview
-                  ref="treeRef"
-                  :data="roles"
-                  v-model="user.roles"
-                  show-checkbox
-                  style="width: 100%"
-                ></vc-treeview>
+                <vc-select  v-model="user.roles" multiple :items="roles" fieldValue="code"
+                  fieldText="name">
+                </vc-select>
               </vc-input-group>
             </vc-col>
           </vc-row>
@@ -87,10 +83,6 @@
       </template>
 
       <template #acttion>
-        <vc-button @click="goBack" :icon="Back">
-          {{ tl("Common", "BtnBack") }}
-        </vc-button>
-
         <vc-button
           type="primary"
           class="ml-2"
@@ -128,7 +120,7 @@ import type { FormInstance } from "element-plus";
 import userService from "@/services/user.service";
 import roleService from "@/services/role.service";
 import masterCodeService from "@/services/master.service";
-import { FolderChecked, Back, Delete } from '@element-plus/icons-vue';
+import { FolderChecked, Delete } from '@element-plus/icons-vue';
 
 const rules = reactive({
   user_name: [
