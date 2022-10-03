@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Framework.Core.Abstractions;
 using Framework.Core.Collections;
 using Framework.Core.Extensions;
 using Application.Core.Contracts;
@@ -24,7 +23,7 @@ namespace Application.Core.Services
             permissionRepository = _unitOfWork.GetRepository<Permission>();
         }
 
-        public async Task<IPagedList<UserResponse>> GetPaged(UserSearchRequest request)
+        public async Task<PagedList<UserResponse>> GetPaged(UserSearchRequest request)
         {
             var data = userRepository
                         .GetQuery()

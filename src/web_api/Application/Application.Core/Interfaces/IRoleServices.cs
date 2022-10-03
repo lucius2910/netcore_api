@@ -6,7 +6,7 @@ namespace Application.Core.Interfaces
 {
     public interface IRoleServices
     {
-        Task<IPagedList<RoleResponse>> GetPaged(PagedRequest request);
+        Task<PagedList<RoleResponse>> GetPaged(PagedRequest request);
         Task<int> Create(RoleRequest request);
         Task<RoleResponse> GetById(Guid id);
         Task<int> Update(Guid id, RoleRequest request);

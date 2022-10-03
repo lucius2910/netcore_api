@@ -3,7 +3,7 @@ using Framework.Core.Helpers;
 
 namespace Framework.Core.Collections
 {
-    public class BaseResponse<T> : IResponse<T> where T : class
+    public class BaseResponse<T> where T : class
     {
         public ResponseCode code { get; set; }
 

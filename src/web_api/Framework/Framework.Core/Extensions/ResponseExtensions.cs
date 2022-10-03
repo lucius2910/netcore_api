@@ -16,7 +16,7 @@ namespace Framework.Core.Extensions
         ///     A <see cref="CancellationToken" /> to observe while waiting for the task to complete.
         /// </param>
         /// <returns>An instance of the inherited from <see cref="IResponse{T}"/> interface.</returns>
-        public static IResponse<T> ToResponse<T>(this T source, CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public static BaseResponse<T> ToResponse<T>(this T source, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             var data = source;
             if (data != null)
@@ -34,7 +34,7 @@ namespace Framework.Core.Extensions
         ///     A <see cref="CancellationToken" /> to observe while waiting for the task to complete.
         /// </param>
         /// <returns>An instance of the inherited from <see cref="IResponse{T}"/> interface.</returns>
-        public static async Task<IResponse<T>> ToResponse<T>(this Task<T> source, CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public static async Task<BaseResponse<T>> ToResponse<T>(this Task<T> source, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             var data = await source;
             if (data != null)
@@ -52,7 +52,7 @@ namespace Framework.Core.Extensions
         ///     A <see cref="CancellationToken" /> to observe while waiting for the task to complete.
         /// </param>
         /// <returns>An instance of the inherited from <see cref="IResponse{T}"/> interface.</returns>
-        public static async Task<IResponse<T>> ToResponse<T>(this IQueryable<T> source, CancellationToken cancellationToken = default(CancellationToken)) where T : class
+        public static async Task<BaseResponse<T>> ToResponse<T>(this IQueryable<T> source, CancellationToken cancellationToken = default(CancellationToken)) where T : class
         {
             var data = await source.FirstOrDefaultAsync();
             if (data != null)

@@ -1,11 +1,12 @@
 ﻿using Framework.Core.Abstractions;
 using Application.Core.Contracts;
+using Framework.Core.Collections;
 
 namespace Application.Core.Interfaces
 {
     public interface IFunctionServices
     {
-        Task<IPagedList<FunctionResponse>> GetPaged(FunctionPagedRequest request);
+        Task<PagedList<FunctionResponse>> GetPaged(FunctionPagedRequest request);
         Task<int> Create(FunctionRequest request);
         Task<FunctionResponse> GetById(Guid id);
         Task<int> Update(Guid id, FunctionRequest request);

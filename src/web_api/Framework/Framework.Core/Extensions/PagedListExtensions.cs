@@ -15,10 +15,10 @@ namespace Framework.Core.Extensions
         /// <param name="page">The index of the page.</param>
         /// <param name="size">The size of the page.</param>
         /// <returns>An instance of the inherited from <see cref="IPagedList{T}"/> interface.</returns>
-        public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> source, int page, int size) => new PagedList<T>(source, page, size);
+        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int page, int size) => new PagedList<T>(source, page, size);
 
         /// <summary>
-        /// Converts the specified source to <see cref="IPagedList{T}"/> by the specified <paramref name="converter"/>, <paramref name="page"/> and <paramref name="size"/>
+        /// Converts the specified source to <see cref="PagedList{T}"/> by the specified <paramref name="converter"/>, <paramref name="page"/> and <paramref name="size"/>
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TResult">The type of the result</typeparam>
@@ -26,8 +26,11 @@ namespace Framework.Core.Extensions
         /// <param name="converter">The converter to change the <typeparamref name="TSource"/> to <typeparamref name="TResult"/>.</param>
         /// <param name="page">The page index.</param>
         /// <param name="size">The page size.</param>
-        /// <returns>An instance of the inherited from <see cref="IPagedList{T}"/> interface.</returns>
-        public static IPagedList<TResult> ToPagedList<TSource, TResult>(this IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter, int page, int size) => new PagedList<TSource, TResult>(source, converter, page, size);
+        /// <returns>An instance of the inherited from <see cref="PagedList{T}"/> interface.</returns>
+        public static PagedList<TResult> ToPagedList<TSource, TResult>(this IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter, int page, int size)
+        {
+            return new PagedList<TSource, TResult>(source, converter, page, size);
+        }
 
         /// <summary>
         /// Converts the specified source to <see cref="IPagedList{T}"/> by the specified <paramref name="page"/> and <paramref name="size"/>.
@@ -40,7 +43,7 @@ namespace Framework.Core.Extensions
         ///     A <see cref="CancellationToken" /> to observe while waiting for the task to complete.
         /// </param>
         /// <returns>An instance of the inherited from <see cref="IPagedList{T}"/> interface.</returns>
-        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> source, int page, int size, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> source, int page, int size, CancellationToken cancellationToken = default(CancellationToken))
         {
             var count = await source.CountAsync(cancellationToken).ConfigureAwait(false);
             var items = await source.Skip((page - 1) * size)
@@ -57,7 +60,7 @@ namespace Framework.Core.Extensions
             return pagedList;
         }
 
-        public static IPagedList<T> ToPagedList<T>(this IQueryable<T> source, int page, int size)
+        public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int page, int size)
         {
             var count = source.Count();
             var items = source.Skip((page - 1) * size).Take(size).ToList();

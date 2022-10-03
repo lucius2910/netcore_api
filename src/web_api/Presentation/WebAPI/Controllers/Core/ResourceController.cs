@@ -5,8 +5,6 @@ using Framework.Core.Extensions;
 using Framework.Core.Helpers;
 using Application.Common.Abstractions;
 using Application.Common.Extensions;
-using Framework.Core.Collections;
-using Framework.Core.Abstractions;
 
 namespace WebAPI.Controllers
 {
@@ -115,9 +113,10 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("screens")]
-        public async Task<IPagedList<string>?> GetListScreen([FromQuery] ResourcePagedRequest request)
+        public async Task<IActionResult> GetListScreen([FromQuery] ResourcePagedRequest request)
         {
-            return await resourceServices.GetScreensByModule(request);
+            var data = await resourceServices.GetScreensByModule(request);
+            return Ok(data);
         }
     }
 }

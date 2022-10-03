@@ -13,7 +13,7 @@ namespace Application.Common.Extensions
             {
                 c.DisableDataAnnotationsValidation = true;
                 c.ImplicitlyValidateChildProperties = true;
-                c.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+                // c.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
             });
 
 

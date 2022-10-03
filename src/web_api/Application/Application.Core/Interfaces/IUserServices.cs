@@ -1,11 +1,11 @@
-﻿using Framework.Core.Abstractions;
+﻿using Framework.Core.Collections;
 using Application.Core.Contracts;
 
 namespace Application.Core.Interfaces
 {
     public interface IUserServices
     {
-        Task<IPagedList<UserResponse>> GetPaged(UserSearchRequest request);
+        Task<PagedList<UserResponse>> GetPaged(UserSearchRequest request);
         Task<UserResponse> GetById(Guid id);
         Task<UserResponse> GetInfoLoginById(Guid id);
         Task<int> Create(UserRequest request);

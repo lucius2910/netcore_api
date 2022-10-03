@@ -6,7 +6,7 @@ namespace Framework.Core.Collections
     /// Represents the default implementation of the <see cref="IPagedList{T}"/> interface.
     /// </summary>
     /// <typeparam name="T">The type of the data to page</typeparam>
-    public class PagedList<T> : IPagedList<T>
+    public class PagedList<T>
     {
         /// <summary>
         /// Gets or sets the index of the page.
@@ -68,7 +68,7 @@ namespace Framework.Core.Collections
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TResult">The type of the result.</typeparam>
-    internal class PagedList<TSource, TResult> : IPagedList<TResult>
+    internal class PagedList<TSource, TResult> : PagedList<TResult>
     {
         /// <summary>
         /// Gets the index of the page.
@@ -145,19 +145,20 @@ namespace Framework.Core.Collections
     public static class PagedList
     {
         /// <summary>
-        /// Creates an empty of <see cref="IPagedList{T}"/>.
+        /// Creates an empty of <see cref="PagedList{T}"/>.
         /// </summary>
         /// <typeparam name="T">The type for paging </typeparam>
-        /// <returns>An empty instance of <see cref="IPagedList{T}"/>.</returns>
-        public static IPagedList<T> Empty<T>() => new PagedList<T>();
+        /// <returns>An empty instance of <see cref="PagedList{T}"/>.</returns>
+        public static PagedList<T> Empty<T>() => new PagedList<T>();
+
         /// <summary>
-        /// Creates a new instance of <see cref="IPagedList{TResult}"/> from source of <see cref="IPagedList{TSource}"/> instance.
+        /// Creates a new instance of <see cref="PagedList{TResult}"/> from source of <see cref="PagedList{TSource}"/> instance.
         /// </summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <param name="source">The source.</param>
         /// <param name="converter">The converter.</param>
-        /// <returns>An instance of <see cref="IPagedList{TResult}"/>.</returns>
-        public static IPagedList<TResult> From<TResult, TSource>(IPagedList<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter) => new PagedList<TSource, TResult>(source, converter);
+        /// <returns>An instance of <see cref="PagedList{TResult}"/>.</returns>
+        public static PagedList<TResult> From<TResult, TSource>(IPagedList<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter) => new PagedList<TSource, TResult>(source, converter);
     }
 }

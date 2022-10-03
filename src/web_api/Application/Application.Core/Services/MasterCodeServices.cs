@@ -2,7 +2,6 @@
 using Application.Core.Contracts;
 using Application.Core.Interfaces;
 using Domain.Entities;
-using Framework.Core.Abstractions;
 using Framework.Core.Collections;
 using Framework.Core.Extensions;
 using Application.Common.Abstractions;
@@ -17,7 +16,7 @@ namespace Application.Core.Services
             masterCodeRepository = _unitOfWork.GetRepository<MasterCode>();
         }
 
-        public async Task<IPagedList<MasterCodeRespose>> GetPaged(PagedRequest request)
+        public async Task<PagedList<MasterCodeRespose>> GetPaged(PagedRequest request)
         {
 
             var data =  masterCodeRepository
@@ -31,7 +30,7 @@ namespace Application.Core.Services
             return dataMapping;
         }
 
-        public async Task<IPagedList<MasterCodeRespose>> GetByTypePaged(MasterCodePagedRequest request)
+        public async Task<PagedList<MasterCodeRespose>> GetByTypePaged(MasterCodePagedRequest request)
         {
 
             var data = masterCodeRepository

@@ -21,10 +21,10 @@ namespace Framework.Core.Extensions
             return new ValidationException(errors.Select(x => new ValidationFailure(x.ErrorCode, x.ErrorMessage)));
         }
 
-        public static IResponse<IResponseError> ToResponse(this ValidationException ex)
+        public static BaseResponseError<BaseResponseErrorItem> ToResponse(this ValidationException ex)
         {
             var response = ex.Errors.Select(x => new BaseResponseErrorItem(x.PropertyName, ResponseCode.Invalid, x.ErrorMessage));
-            return new BaseResponseError<IResponseError>(response, ResponseCode.Invalid, ex.Message);
+            return new BaseResponseError<BaseResponseErrorItem>(response, ResponseCode.Invalid, ex.Message);
         }
 
         public static async Task TryRunAsync(this Task task)

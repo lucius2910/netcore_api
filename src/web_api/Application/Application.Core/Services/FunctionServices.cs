@@ -21,7 +21,7 @@ namespace Application.Core.Services
             functionRepository = _unitOfWork.GetRepository<Function>();
         }
 
-        public async Task<IPagedList<FunctionResponse>> GetPaged(FunctionPagedRequest request)
+        public async Task<PagedList<FunctionResponse>> GetPaged(FunctionPagedRequest request)
         {
             var data = functionRepository.GetQuery().ExcludeSoftDeleted()
                 .Include(x => x.parent)

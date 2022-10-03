@@ -3,7 +3,6 @@ using Application.Core.Contracts;
 using Application.Core.Interfaces;
 using AutoMapper;
 using Domain.Entities;
-using Framework.Core.Abstractions;
 using Framework.Core.Collections;
 using Framework.Core.Extensions;
 
@@ -19,7 +18,7 @@ namespace Application.Core.Services
             resourceRepository = _unitOfWork.GetRepository<Resource>();
         }
 
-        public async Task<IPagedList<ResourceResponse>> GetPaged(ResourcePagedRequest request)
+        public async Task<PagedList<ResourceResponse>> GetPaged(ResourcePagedRequest request)
         {
             var data = resourceRepository
                                     .GetQuery()
@@ -99,7 +98,7 @@ namespace Application.Core.Services
             return count;
         }
 
-        public async Task<IPagedList<string>?> GetListScreen(PagedRequest request)
+        public async Task<PagedList<string>?> GetListScreen(PagedRequest request)
         {
             return resourceRepository.GetQuery()
                         .ExcludeSoftDeleted()
@@ -109,7 +108,7 @@ namespace Application.Core.Services
                         .ToPagedList(request.page, request.size);
         }
 
-        public async Task<IPagedList<string>?> GetScreensByModule(ResourcePagedRequest request)
+        public async Task<PagedList<string>?> GetScreensByModule(ResourcePagedRequest request)
         {
             return resourceRepository.GetQuery()
                         .ExcludeSoftDeleted()

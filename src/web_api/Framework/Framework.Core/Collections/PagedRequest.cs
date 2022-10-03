@@ -2,7 +2,7 @@
 
 namespace Framework.Core.Collections
 {
-    public class PagedRequest : IRequestPaged
+    public class PagedRequest
     {
         public int page { get; set; } = 1;
 

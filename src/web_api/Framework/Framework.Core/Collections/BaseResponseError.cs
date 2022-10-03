@@ -3,7 +3,7 @@ using Framework.Core.Helpers;
 
 namespace Framework.Core.Collections
 {
-    public class BaseResponseError : IResponse
+    public class BaseResponseError
     {
         public ResponseCode code { get; set; }
 
