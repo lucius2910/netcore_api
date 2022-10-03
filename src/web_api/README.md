@@ -5,7 +5,8 @@
 - Databse: PostgreSQL 14.02
 
 ## Design pattern
-- Repository & Unit Of Work
+- Repository & UnitOfWork
+- Clean Architecture
 
 ## IDE & Tools
 - Visual Studio 2022 Pro
@@ -19,7 +20,7 @@
     `Seisankanri.Api\appsettings.Development.json`
 
 ## Migration
-- Comment code below to run migration `Framework.Api\Extensions\InstallerExentions.cs`
+- Comment code below to run migration `Application\Application.Common\Extensions\AddApplicationCommonServices.cs`
     ```cs 
     // c.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
     ```
