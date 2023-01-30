@@ -18,26 +18,31 @@ namespace WebAPI.ProfileMapper
         public CoreProfile()
         {
             CreateMap<UserRequest, User>();
+            CreateMap<PagedList<User>, PagedList<UserResponse>>();
             CreateMap<IPagedList<User>, PagedList<UserResponse>>();
             CreateMap<User, UserResponse>();
 
             CreateMap<RoleRequest, Role>()
                 .ForMember(dest => dest.permissions, opt => opt.Ignore());
             CreateMap<IPagedList<Role>, PagedList<RoleResponse>>();
+            CreateMap<PagedList<Role>, PagedList<RoleResponse>>();
             CreateMap<Role, RoleResponse>()
                 .ForMember(dest => dest.permissions, opt => opt.MapFrom(src => src.permissions.Select(x => x.function.code).ToList()));
 
             CreateMap<FunctionRequest, Function>();
             CreateMap<IPagedList<Function>, PagedList<FunctionResponse>>();
+            CreateMap<PagedList<Function>, PagedList<FunctionResponse>>();
             CreateMap<Function, FunctionResponse>()
                 .ForMember(dest => dest.parent, opt => opt.MapFrom(src => src.parent.code));
 
             CreateMap<ResourceRequest, Resource>();
             CreateMap<IPagedList<Resource>, PagedList<ResourceResponse>>();
+            CreateMap<PagedList<Resource>, PagedList<ResourceResponse>>();
             CreateMap<Resource, ResourceResponse>();
             
             CreateMap<MasterCodeRequest, MasterCode>();
             CreateMap<IPagedList<MasterCode>, PagedList<MasterCodeRespose>>();
+            CreateMap<PagedList<MasterCode>, PagedList<MasterCodeRespose>>();
             CreateMap<MasterCode, MasterCodeRespose>();
 
         }

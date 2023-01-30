@@ -25,15 +25,23 @@ namespace Application.Core.Services
 
         public async Task<PagedList<UserResponse>> GetPaged(UserSearchRequest request)
         {
-            var data = userRepository
-                        .GetQuery()
-                        .ExcludeSoftDeleted()
-                        .Where(x => string.IsNullOrEmpty(request.search) || x.code.ToLower().Contains(request.search.ToLower()) || x.full_name.ToLower().Contains(request.search.ToLower()))
-                        .SortBy(request.sort)
-                        .ToPagedList(request.page, request.size);
+            try
+            {
+                var data = userRepository
+                       .GetQuery()
+                       .ExcludeSoftDeleted()
+                       .Where(x => string.IsNullOrEmpty(request.search) || x.code.ToLower().Contains(request.search.ToLower()) || x.full_name.ToLower().Contains(request.search.ToLower()))
+                       .SortBy(request.sort)
+                       .ToPagedList(request.page, request.size);
 
-            var dataMapping = _mapper.Map<PagedList<UserResponse>>(data);
-            return dataMapping;
+                var dataMapping = _mapper.Map<PagedList<UserResponse>>(data);
+                return dataMapping;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
 
         public async Task<UserResponse> GetById(Guid id)
