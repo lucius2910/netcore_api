@@ -1,46 +1,46 @@
-import { createApp } from "vue";
-import { createPinia } from "pinia";
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-import App from "./App.vue";
-import router from "./router";
+import App from './App.vue'
+import router from './router'
 import resourceService from '@/services/resource.service'
-import VcRegister from "@/components/commons/vc-register";
-import ElementPlus from "element-plus";
-import "element-plus/dist/index.css";
-import "@/assets/styles/main.scss";
+import VcRegister from '@/components/commons/vc-register'
 
-const app = createApp(App);
+import { registerLayouts } from '@/layouts/register'
 
-/**
- * BEGIN register el icon
- */
+// ===================== ELEMENT PLUS =========================
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import '@/assets/styles/main.scss'
+
+const app = createApp(App)
+
+// ===================== BASE COMPONENT =========================
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-/**
- * END register el icon
- */
+VcRegister.register(app)
 
+// ===================== ENABLE STORE PINIA =====================
+const pinia = createPinia()
+app.use(pinia)
 
+// eslint-disable-next-line no-constant-condition
+if (false) {
+  resourceService
+    .getList({ page: 1, size: 10000, sort: 'screen.asc' })
+    .then((reponse: any) => {
+      localStorage.setItem(
+        'i18n.ja',
+        reponse.data ? JSON.stringify(reponse.data) : '[]'
+      )
+    })
+}
 
-resourceService
-  .getList({ page: 1, size: 10000, sort: 'screen.asc' })
-  .then((reponse: any) => {
-    localStorage.setItem(
-      'i18n.ja',
-      reponse.data ? JSON.stringify(reponse.data) : '[]'
-    )
-  })
-  .finally(() => {
-    const app = createApp(App)
+app.use(router)
+app.use(ElementPlus)
+registerLayouts(app)
 
-    VcRegister.register(app)
-
-    app.use(createPinia());
-    app.use(router);
-    app.use(ElementPlus);
-
-    app.mount("#app");
-  })
+app.mount('#app')

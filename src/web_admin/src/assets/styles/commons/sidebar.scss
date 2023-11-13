@@ -12,6 +12,7 @@
 		background-color: transparent;
 		.el-menu-item{
 			color: #fff;
+			font-size: $-input-font-size !important;
 			&:hover{
 				background-color: #324057;
 			}
@@ -30,6 +31,7 @@
 				color: #fff;
 				background-color: #172538;
 				.el-menu-item{
+					font-size: $-input-font-size !important;
 					color: #fff;
 					&:hover{
 						background-color: #324057;

@@ -1,11 +1,6 @@
 <template>
-  <el-button
-    :class="['vc-button text-none', { 'v-btn--loading': loading }]"
-    :loading="loading"
-    :disabled="loading"
-    @click="onClicked"
-    v-if="checkPermission()"
-  >
+  <el-button :class="['vc-button text-none', { 'v-btn--loading': loading }]" :loading="loading" :disabled="loading"
+    @click="onClicked" v-if="checkPermission()">
     <slot></slot>
   </el-button>
 </template>

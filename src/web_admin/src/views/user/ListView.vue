@@ -31,17 +31,8 @@
 
     <vc-row>
       <vc-col :span="24">
-        <vc-table
-          :datas="users"
-          :tableConfig="tableConfig"
-          :colConfigs="colConfig"
-          :page="pageConfig"
-          :loading="loading"
-          @dbClick="onEdit"
-          @sorted="onSort"
-          @rowSelected="onRowSelected"
-          @pageChanged="onPageChanged"
-        >
+        <vc-table :datas="users" :tableConfig="tableConfig" :colConfigs="colConfig" :page="pageConfig" :loading="loading"
+          @dbClick="onEdit" @sorted="onSort" @rowSelected="onRowSelected" @pageChanged="onPageChanged">
         </vc-table>
       </vc-col>
     </vc-row>
@@ -101,7 +92,7 @@ const onSort = async (sortBy: any) => {
 };
 
 const onPageChanged = async (page: any) => {
-  pageConfig.value = {...page};
+  pageConfig.value = { ...page };
   getList();
 };
 
@@ -115,25 +106,25 @@ const onEdit = (item: any) => {
   router.push({ name: "UserEditByID", params: { id: item.id } });
 };
 
-const onDeleteItem = (item: any) => {
-  confirmDialog.value.confirm(
-    tl("Common", "Delete"),
-    tl("Common", "ConfirmDelete", [item.code]),
-    async (res: any) => {
-      if (res) await onDeleteMulti([item]);
-    }
-  );
-};
+// const onDeleteItem = (item: any) => {
+//   confirmDialog.value.confirm(
+//     tl("Common", "Delete"),
+//     tl("Common", "ConfirmDelete", [item.code]),
+//     async (res: any) => {
+//       if (res) await onDeleteMulti([item]);
+//     }
+//   );
+// };
 
-const onDeleteMulti = async (data: any) => {
-  await userService.delete(data[0]).then(() => {
-    getList();
-  });
-};
+// const onDeleteMulti = async (data: any) => {
+//   await userService.delete(data[0]).then(() => {
+//     getList();
+//   });
+// };
 </script>
 
 <style lang="scss">
-.box-search{
+.box-search {
   background-color: #fff;
   padding: 12px
 }

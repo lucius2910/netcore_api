@@ -18,7 +18,8 @@ const tl = (...params: any): string => {
     });
   }
 
-  return message ?? `${params[0]}_${params[1]}`;
+  // return message ?? `${params[0]}_${params[1]}`;
+  return message ?? `${params[1]}`;
 };
 
 export default tl;

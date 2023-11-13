@@ -1,7 +1,7 @@
 <template>
-  <TheDefault />
+  <TheAppLayout />
 </template>
 
 <script setup lang="ts">
-import TheDefault from "@/components/layouts/TheDefault.vue";
+import TheAppLayout from "@/layouts/TheAppLayout.vue";
 </script>

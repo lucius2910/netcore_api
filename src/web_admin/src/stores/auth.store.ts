@@ -44,5 +44,9 @@ export const useAuthStore = defineStore("useAuthStore", {
       this.account = {};
       this.loggedIn = false;
     },
+    async setUserInfo(account: any) {
+      this.account = account;
+      this.loggedIn = account ? true : false;
+    },
   },
 });

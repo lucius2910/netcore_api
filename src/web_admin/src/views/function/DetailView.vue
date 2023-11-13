@@ -8,7 +8,7 @@
           :rules="rules"
           label-width="120px">
           <vc-row :gutter="20">
-            <vc-col :lg="122" :md="12" :sm="24" :xs="24">
+            <vc-col :lg="12" :md="12" :sm="24" :xs="24">
               <vc-input-group required :label="tl('Function', 'Module')">
                 <vc-select
                   v-model="func.module"

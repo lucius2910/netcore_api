@@ -2,98 +2,115 @@
   <div class="page-login flex-center">
     <vc-card class="card-login pa-10">
       <vc-card-content>
-        <el-form
+        <vc-form
           ref="loginFormRef"
           label-position="top"
           :model="request"
           :rules="rules"
         >
-          <p class="logo">三宝化成工業</p>
-          <vc-input-group
-            required
-            prop="user_name"
-            :label="tl('User', 'UserName')"
-          >
-            <vc-input v-model="request.user_name" />
+          <p class="logo-container">
+            <image :src="'images/logo_honki.png'" />
+            <span class="text-logo">企業の未来を考える会社です。</span>
+          </p>
+
+          <p class="logo">ログイン</p>
+
+          <vc-input-group required prop="user_name">
+            <vc-input-icon
+              v-model="request.user_name"
+              :icon="Avatar"
+              placeholder="ユーザー名 or メールアドレス"
+              autocomplete="off"
+            />
+          </vc-input-group>
+
+          <vc-input-group class="content-pwd" required prop="password">
+            <vc-input-icon
+              v-model="request.password"
+              :icon="Lock"
+              placeholder="パスワード"
+              type="password"
+              autocomplete="new-password"
+            />
           </vc-input-group>
 
           <vc-input-group
-            required
-            prop="password"
-            :label="tl('Login', 'Password')"
+            class="d-flex space-between"
+            style="padding-bottom: 20px"
           >
-            <vc-input v-model="request.password" type="password" />
+            <vc-checkbox label="ログインしたままにする"></vc-checkbox>
           </vc-input-group>
-
-          <vc-input-group class="d-flex space-between">
-            <vc-checkbox :label="tl('Login', 'RememberLogin')"> </vc-checkbox>
-
+          <p class="container-btn-login">
             <vc-button
               type="primary"
               class="mt-5"
               @click="onLogin(loginFormRef)"
               :loading="isLoading"
-              :icon="ArrowRight"
-            >
-              {{ tl("Login", "BtnLogin") }}
+              >ログインする
             </vc-button>
-          </vc-input-group>
-        </el-form>
+          </p>
+          <p class="forgot-pass">
+            <router-link to="/forgot_password"
+              >パスワードを忘れた場合はこちら</router-link
+            >
+          </p>
+        </vc-form>
       </vc-card-content>
     </vc-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { useAuthStore } from "@/stores/auth.store";
-import { useRouter } from "vue-router";
-import validate from "@/utils/validate_elp";
-import tl from "@/utils/locallize";
-import type { FormInstance } from "element-plus";
-import { ArrowRight } from '@element-plus/icons-vue';
+  import { reactive, ref } from 'vue'
+  import { useAuthStore } from '@/stores/auth.store'
+  import { useRouter } from 'vue-router'
+  import validate from '@/utils/validate_elp'
+  import type { FormInstance } from 'element-plus'
+  import { Avatar, Lock } from '@element-plus/icons-vue'
 
-const isLoading = ref<boolean>(false);
-const authStore = useAuthStore();
-const router = useRouter();
-const loginFormRef = ref<FormInstance>();
+  const isLoading = ref<boolean>(false)
+  const authStore = useAuthStore()
+  const router = useRouter()
+  const loginFormRef = ref<FormInstance>()
 
-const request = reactive({
-  user_name: null,
-  password: null,
-  remember: false,
-});
+  const request = reactive({
+    user_name: null,
+    password: null,
+    remember: false,
+  })
 
-const rules = reactive({
-  user_name: [
-    { required: true, validator: validate.required, trigger: "blur" },
-  ],
-  password: [{ required: true, validator: validate.required, trigger: "blur" }],
-});
+  const rules = reactive({
+    user_name: [
+      { required: true, validator: validate.required, trigger: 'blur' },
+    ],
+    password: [
+      { required: true, validator: validate.required, trigger: 'blur' },
+    ],
+  })
 
-const onLogin = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
+  const onLogin = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
 
-  await formEl.validate(async (valid) => {
-    if (!valid) return;
+    await formEl.validate(async (valid) => {
+      if (!valid) return
 
-    isLoading.value = true;
+      isLoading.value = true
 
-    await authStore
-      .login(request)
-      .then((isLogged) => {
-        if (isLogged)
-          router.push({
-            name: "Dashboard",
-          });
-      })
-      .finally(() => {
-        isLoading.value = false;
-      });
-  });
-};
+      await authStore
+        .login(request)
+        .then((isLogged) => {
+          if (isLogged)
+            router.push({
+              name: 'Dashboard',
+            })
+        })
+        .finally(() => {
+          isLoading.value = false
+        })
+    })
+  }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/page/login";
+  @import '@/assets/styles/page/login';
 </style>

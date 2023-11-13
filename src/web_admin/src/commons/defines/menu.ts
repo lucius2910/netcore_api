@@ -1,23 +1,25 @@
 export default [
-  { routerName: "Dashboard", text: "Dashboard", icon: "mdi-view-dashboard" },
+  { routerName: 'Dashboard', path: '/', text: 'Dashboard', icon: 'Sunrise' },
   {
-    text: "Users",
-    icon: "mdi-account-multiple",
-    items: [{ routerName: "UserList", text: "List" }],
+    text: 'Users',
+    icon: 'Plus',
+    items: [{ routerName: 'UserList', path: '/user',text: 'List' }],
   },
   {
-    routerName: "Settings",
-    text: "System settings",
-    icon: "mdi-cogs",
+    routerName: 'Settings',
+    text: 'System settings',
+    icon: 'Aim',
     items: [
-      { routerName: "RoleList", text: "Role" },
-      { routerName: "FunctionList", text: "Function" },
-      { routerName: "MasterCodeList", text: "Master Code" },
+      { routerName: 'RoleList', path: '/role', text: 'Role' },
+      { routerName: 'FunctionList', path: '/function', text: 'Function' },
+      { routerName: 'MasterCodeList', path: '/master', text: 'Master Code' },
+      { routerName: 'ResourceList', path: '/resource', text: 'Resource' },
     ],
   },
   {
-    text: "Manufactures",
-    icon: "mdi-warehouse",
-    routerName: "InventoryManufacture",
+    text: 'Manufactures',
+    icon: 'PieChart',
+    routerName: 'InventoryManufacture',
+    path: '/manufactures'
   },
-];
+]

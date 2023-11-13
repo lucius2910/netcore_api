@@ -248,8 +248,9 @@ const onPageChanged = async (page: any) => {
 };
 
 const onDelete = async () => {
+  const DeleteItem = JSON.parse(detailItem.id || '{}')
   isLoading.value = false;
-  await resourceService.delete(detailItem.id).finally(async () => {
+  await resourceService.delete(DeleteItem).finally(async () => {
     isLoading.value = false;
     await getListResource();
     onAddNew();
