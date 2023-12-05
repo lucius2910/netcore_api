@@ -13,6 +13,7 @@ export const colConfig = [
     key: "code",
     title: tl("User", "Code"),
     is_sort: true,
+    linked: true,
   },
   {
     key: "full_name",
