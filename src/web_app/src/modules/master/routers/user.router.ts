@@ -3,6 +3,9 @@ export default [
     path: '/user',
     name: 'UserList',
     component: () => import('@master/views/user/ListView.vue'),
+    meta: {
+      layout: "Default"
+    }
   },
   {
     path: '/user/new',

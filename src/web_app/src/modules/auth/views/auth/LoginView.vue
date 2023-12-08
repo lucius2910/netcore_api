@@ -59,7 +59,7 @@ const rules = reactive({
   user_name: [{ required: true, validator: validate.required, trigger: "blur", full_field: "ユーザー名 or メールアドレス" }],
   password: [
     { required: true, validator: validate.required, trigger: "blur", full_field: "パスワード" },
-    { validator: validate.alphabetAndSymbolRule, trigger: "blur"}],
+    { validator: validate.alphabetAndSymbolRule, trigger: "blur" }],
 });
 
 onMounted(() => {

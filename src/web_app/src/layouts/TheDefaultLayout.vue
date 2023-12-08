@@ -3,7 +3,6 @@
     <!-- <TheSideBar :isCollapse="isCollapse" v-if="loggedIn" /> -->
     <div v-bind:class="loggedIn ? 'page-container is-vertical' : 'no-containner'">
       <TheNavBar @toogleSidebar="onCollapse" />
-      <!-- <TheMenu /> -->
       <el-main>
         <!-- <RouterView /> -->
         <slot></slot>

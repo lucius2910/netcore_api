@@ -3,7 +3,8 @@ $-input-border: 4px;
 $-input-border-color: #cdcdcd;
 $-text-color: #606266;
 
-$-primary-color: #409eff;
+$-primary-color: --el-color-primary;
+// $-primary-color: #409eff;
 $-surface-color: #212d40;
 $-disabled-background: #468acf;
 $-table-header-color: #f4f6f8;
