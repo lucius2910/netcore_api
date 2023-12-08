@@ -31,7 +31,7 @@
 
     <vc-row>
       <vc-col :span="24">
-        <vc-table :datas="users" :tableConfig="tableConfig" :colConfigs="colConfig" :page="pageConfig" :loading="loading"
+        <vc-table :datas="gridData" :tableConfig="tableConfig" :colConfigs="colConfig" :page="pageConfig" :loading="loading"
           @dbClick="onEdit" @sorted="onSort" @rowSelected="onRowSelected" @pageChanged="onPageChanged">
         </vc-table>
       </vc-col>
@@ -45,12 +45,16 @@
 import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import userService from "@master/services/user.service";
+import userStore from "@master/store/user.store";
 import { colConfig, tableConfig } from "@/commons/tables/user.table";
 import tl from "@/utils/locallize";
 import { Search, Plus, ArrowRight, Upload, Download } from '@element-plus/icons-vue';
 import DetailModal from './DetailModal.vue'
+import { mapActions, storeToRefs } from "pinia";
 
-const users = ref<any[]>([]);
+// const users = ref<any[]>([]);
+const { gridData } = storeToRefs(userStore);
+
 const pageConfig = ref<any>({});
 const router = useRouter();
 const search = ref<any>("");
@@ -64,6 +68,8 @@ onBeforeMount(async () => {
   getList();
 });
 
+...mapActions(userStore)
+
 const getList = async () => {
   loading.value = true;
   await userService
@@ -74,7 +80,7 @@ const getList = async () => {
       ...pageConfig.value,
     })
     .then((data) => {
-      users.value = data.data ?? [];
+      gridData.value = data.data ?? [];
       pageConfig.value.total = data.total
     })
     .finally(() => {
