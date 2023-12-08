@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  frontend:
+    container_name: base_sys
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    restart: always
+    image: base_sys
+    ports:
+      - "80:80"
