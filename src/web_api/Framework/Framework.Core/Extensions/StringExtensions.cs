@@ -20,5 +20,9 @@ namespace Framework.Core.Extensions
         {
             return RemoveAccents(source).Contains(RemoveAccents(target));
         }
+        public static string ReplaceText(this string text)
+        {
+            return text.Replace('.', ',');
+        }
     }
 }

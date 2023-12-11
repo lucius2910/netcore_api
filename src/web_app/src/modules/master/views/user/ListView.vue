@@ -50,7 +50,7 @@ import { colConfig, tableConfig } from "@/commons/tables/user.table";
 import tl from "@/utils/locallize";
 import { Search, Plus, ArrowRight, Upload, Download } from '@element-plus/icons-vue';
 import DetailModal from './DetailModal.vue'
-import { mapActions, storeToRefs } from "pinia";
+import { storeToRefs } from "pinia";
 
 // const users = ref<any[]>([]);
 const { gridData } = storeToRefs(userStore);
@@ -67,8 +67,6 @@ const detailRef = ref<any>(null);
 onBeforeMount(async () => {
   getList();
 });
-
-...mapActions(userStore)
 
 const getList = async () => {
   loading.value = true;
